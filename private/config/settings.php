@@ -13,10 +13,10 @@ $database = [
  * Site Settings
  */
 $site = [
-    'siteName' => 'PDO Template',
+    'siteName' => 'Recepten delen aplicatie',
     'debug' => true,
     'maintenance' => false,
-    'showPopup' => true,
+    'showPopup' => false,
     'popupTitle' => 'Note',
     'popupMessage' => 'This is a popup you can change it in the settings!',
     'popupButtons' => [
