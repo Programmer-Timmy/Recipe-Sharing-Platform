@@ -11,10 +11,13 @@
                 </li>
 
             </ul>
-                <form class="d-flex">
+            <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+                <form>
                     <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                    <a><i class="fa-regular fa-user" style="color: #ffffff;"></i></a>
                 </form>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="account"><i style="font-size: 25px; padding-left: 10px" class="fa-regular fa-user"></i></a>
+                </li>
             </ul>
 
         </div>
