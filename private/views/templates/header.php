@@ -29,6 +29,7 @@ function getPageTitle() {
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="http://recipesharingplatform/css/styles.css">
+    <script src="https://kit.fontawesome.com/65416f0144.js" crossorigin="anonymous"></script>
 </head>
 <body>
 

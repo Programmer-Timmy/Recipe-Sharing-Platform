@@ -12,7 +12,8 @@
 
             </ul>
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <a><i class="fa-regular fa-user" style="color: #ffffff;"></i></a>
                 </form>
             </ul>
 

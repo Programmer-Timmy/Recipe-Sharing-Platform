@@ -28,8 +28,17 @@ if ($site['maintenance'] && !in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {
         $requestedPage = 'home';
     }
 
+
+    $position = strpos($requestedPage, "?");
+    $require = $requestedPage;
+    if ($position !== false) {
+        $newString = substr($requestedPage, 0, $position);
+        $require = $newString; // Output: "Hello "
+    }
+
+
     // Include the specific page content
-    $pageTemplate = __DIR__ . "/../private/Views/pages/$requestedPage.php";
+    $pageTemplate = __DIR__ . "/../private/Views/pages/$require.php";
 
     if (file_exists($pageTemplate)) {
         include $pageTemplate;
