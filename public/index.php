@@ -54,3 +54,4 @@ if ($site['showPopup'] && !isset($_SESSION['popupShown'])) {
     $_SESSION['popupShown'] = true;
 }
 ?>
+
