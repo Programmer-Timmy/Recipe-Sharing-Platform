@@ -1,3 +1,18 @@
+<?php
+$requestedPage = $_SERVER['REQUEST_URI'];
+if ($requestedPage == "/") {
+    $requestedPage = 'home';
+}
+
+
+$position = strpos($requestedPage, "?");
+$require = $requestedPage;
+if ($position !== false) {
+    $newString = substr($requestedPage, 0, $position);
+    $require = $newString; // Output: "Hello "
+}
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="home">Navbar</a>
@@ -7,16 +22,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="home">Home</a>
+                    <a class="nav-link <?php if($require == '/home')echo"active"; ?>" aria-current="page" href="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php if($require == '/recipes')echo"active"; ?>" aria-current="page" href="recipes">Recepten</a>
                 </li>
 
             </ul>
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                <form>
+                <form <?php if($require !== '/recipes')echo"action='recipes'"; ?>">
                     <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 </form>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="account"><i style="font-size: 25px; padding-left: 10px" class="fa-regular fa-user"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="saved"><i style="font-size: 25px; padding-left: 10px" class="fa-regular fa-heart"></i></a>
                 </li>
             </ul>
 

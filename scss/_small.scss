@@ -5,3 +5,72 @@ body{
 .navbar{
   padding: 15px;
 }
+
+
+.card {
+
+  .card-body {
+    color: black;
+  }
+
+  .card-link {
+    text-decoration: none;
+  }
+
+  .like-btn {
+    position: absolute;
+    margin: 5px;
+    right: 0;
+    color: white;
+    font-size: 20px;
+
+    &:hover {
+      color: red;
+    }
+
+    &:active {
+      color: red !important;
+      border-color: rgba(255, 0, 0, 0) !important;
+    }
+  }
+
+  .edit-btn {
+    position: absolute;
+    margin: 5px;
+    left: 0;
+    color: black;
+    font-size: 30px;
+    transition: font-size 0.5s ease-in-out;
+
+    &:hover {
+      color: black;
+      font-size: 33px;
+    }
+
+    &:active {
+      color: black !important;
+      border-color: rgba(0, 0, 255, 0) !important;
+    }
+  }
+
+  .delete-btn{
+    position: absolute;
+    margin: 5px;
+    left: 0;
+    top: 40px;
+    color: black;
+    font-size: 30px;
+    transition: font-size 0.5s ease-in-out;
+
+
+    &:hover {
+      color: black;
+      font-size: 33px;
+    }
+
+    &:active {
+      color: black !important;
+      border-color: rgba(255, 0, 0, 0) !important;
+    }
+  }
+}

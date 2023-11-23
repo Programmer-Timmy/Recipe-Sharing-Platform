@@ -19,6 +19,21 @@ if ($site['maintenance'] && !in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {
     // Include the maintenance page
     include __DIR__ . '/../private/Views/pages/maintenance.php';
 } else {
+    // Connect to the database
+    global $database;
+
+    $servername = $database['host'];
+    $username = $database['user'];
+    $password = $database['password'];
+    $dbname = $database['database'];
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+
     // Include the common header
     include __DIR__ . '/../private/Views/templates/navbar.php';
 
@@ -50,9 +65,6 @@ if ($site['maintenance'] && !in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {
     // Include the common footer
     include __DIR__ . '/../private/Views/templates/footer.php';
 
-    // Connect to the database
-    global $database;
-    database::connect($database['host'], $database['user'], $database['password'], $database['database']);
 }
 
 if ($site['showPopup'] && !isset($_SESSION['popupShown'])) {

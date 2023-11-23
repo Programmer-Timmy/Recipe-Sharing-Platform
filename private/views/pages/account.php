@@ -1,3 +1,8 @@
+<?php
+/** TODO make a login page!! and change this!! */
+$userRecipes = Recipes::getRecipeByUser('2')
+
+?>
 <div class="container  mt-4">
     <section id="profile" class="bg-light rounded p-4">
         <!-- Profile Section Content Goes Here -->
@@ -25,64 +30,34 @@
         <h2 class="mb-4 text-center">Mijn Recepten</h2>
 
         <div class="row">
-            <!-- Recipe Card 1 -->
-            <div class="col-md-4 mb-4">
-                <a href="recipe.html?id=1" class="card-link">
-                    <div class="card">
-                        <img src="img/588A9371.jpg" class="card-img-top" alt="Recipe 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Recipe 1</h5>
-                            <p class="card-text">Description of Recipe 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <?php
+            foreach($userRecipes as $userRecipe){
+                echo"
+                <div class=\"col-md-4 mb-4 d-flex\">
+                <div class=\"card flex-fill\">
+                    <button class=\"btn like-btn\"><i class=\"fas fa-heart\"></i></button>
+                    <a href='editRecipe?id=$userRecipe->id' class=\"btn edit-btn\"><i class=\"fa-solid fa-pen-to-square\"></i></a>
+                    <a href='account?delte=$userRecipe->id' class=\"btn delete-btn\"><i class=\"fa-solid fa-trash\"></i></a>
+                    <a href=\"recipe?id=$userRecipe->id\" class=\"card-link\">
+                        <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$userRecipe->title\">
+                        <div class=\"card-body\">
+                            <h5 class=\"card-title\">$userRecipe->title</h5>
+                            <p class=\"card-text\">$userRecipe->description</p>
                         </div>
-                        <div class="card-footer mb-2 d-flex justify-content-between flex-wrap">
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
+                        <div class=\"card-footer d-flex justify-content-between flex-wrap\">";
+                $categories = Categories::getCategoriesByRecipes($userRecipe->id);
+                foreach($categories as $category){
+                    echo"<span class=\"badge bg-primary mr-2\">".$category->name."</span>";
+                }
+                echo"
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
-
-            <!-- Recipe Card 2 -->
-            <div class="col-md-4 mb-4">
-                <a href="recipe.html?id=2" class="card-link">
-                    <div class="card">
-                        <img src="img/588A9371.jpg" class="card-img-top" alt="Recipe 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Recipe 2</h5>
-                            <p class="card-text">Description of Recipe 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="card-footer mb-2 d-flex justify-content-between flex-wrap">
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Recipe Card 3 -->
-            <div class="col-md-4 mb-4">
-                <a href="recipe.html?id=3" class="card-link">
-                    <div class="card">
-                        <img src="img/588A9371.jpg" class="card-img-top" alt="Recipe 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Recipe 3</h5>
-                            <p class="card-text">Description of Recipe 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="card-footer mb-2 d-flex justify-content-between flex-wrap">
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                            <span class="badge bg-primary mb-2 mr-2">Category 1</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                
+                ";
+            }
+            ?>
         </div>
     </section>
-
-
 </div>
