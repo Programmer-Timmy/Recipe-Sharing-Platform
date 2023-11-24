@@ -23,6 +23,7 @@ body{
     right: 0;
     color: white;
     font-size: 20px;
+    transition: color 0.3s ease-in-out;
 
     &:hover {
       color: red;
@@ -72,5 +73,17 @@ body{
       color: black !important;
       border-color: rgba(255, 0, 0, 0) !important;
     }
+  }
+}
+
+.liked .fas {
+  color: red;
+  transition: color 0.3s ease-in-out;
+  &:hover {
+    color: white;
+  }
+  &:active {
+    color: white !important;
+    border-color: rgba(255, 0, 0, 0) !important;
   }
 }

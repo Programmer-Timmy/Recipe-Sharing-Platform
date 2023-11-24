@@ -1,6 +1,14 @@
 <?php
 /** TODO make a login page!! and change this!! */
-$userRecipes = Recipes::getRecipeByUser('2')
+if(!isset($_SESSION['userId'])){
+    header('Location: login');
+    $_COOKIE['redirect'] = 'account';
+} else {
+    $user = user::getUserById($_SESSION['userId']);
+    $userRecipes = Recipes::getRecipeByUser($_SESSION['userId']);
+}
+
+
 
 ?>
 <div class="container  mt-4">
@@ -12,13 +20,13 @@ $userRecipes = Recipes::getRecipeByUser('2')
             <!-- User Image (on the left) -->
             <div class="col-md-4 text-center">
                 <img src="img/profilepic.jpg" alt="User Image" class="img-fluid rounded-circle mb-3" style="max-width: 150px; border: 4px solid #fff;">
-                <h3 class="font-weight-bold">Tim van der Kloet</h3>
+                <h3 class="font-weight-bold"><?php echo ucfirst($user->firstname) . " " . $user->lastname  ?></h3>
             </div>
 
             <!-- User Information (on the right) -->
             <div class="col-md-8">
                 <!-- User Description -->
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="lead"><?php echo $user->description ?></p>
             </div>
         </div>
     </section>

@@ -30,9 +30,10 @@ if ($position !== false) {
 
             </ul>
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                <form <?php if($require !== '/recipes')echo"action='recipes'"; ?>">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                </form>
+                <?php
+                    if($require == '/recipes')echo'<input class="form-control me-2" type="search" id="search" name="search"  placeholder="Search" aria-label="Search">';
+                ?>
+
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="account"><i style="font-size: 25px; padding-left: 10px" class="fa-regular fa-user"></i></a>
                 </li>

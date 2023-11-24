@@ -1,6 +1,8 @@
 <?php
 $recipes = Recipes::getRecipes();
 /** todo add user for likes */
+
+$issetUser = isset($_SESSION['userId'])?'true':'false';
 ?>
 
 <div class="container  mt-4">
@@ -23,13 +25,17 @@ $recipes = Recipes::getRecipes();
 
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="search-results">
             <?php
             foreach($recipes as $recipe){
+                $liked = "";
+                if (isset($_SESSION['userId'])) {
+                    $liked = user::getUserLikes($_SESSION['userId'], $recipe->id);
+                }
                 echo"
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
-                    <button class=\"btn like-btn\"><i class=\"fas fa-heart\"></i></button>
+                    <button class=\"btn like-btn $liked\" id='likeButton_$recipe->id' onclick='like($recipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
                     
                     <a href=\"recipe?id=$recipe->id\" class=\"card-link\">
                         <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$recipe->title\">
@@ -54,3 +60,4 @@ $recipes = Recipes::getRecipes();
         </div>
     </section>
 </div>
+<script src="js/search.js"></script>
