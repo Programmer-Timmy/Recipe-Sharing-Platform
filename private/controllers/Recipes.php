@@ -29,4 +29,12 @@ class Recipes
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public static function getRandomRecipes()
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM recipes ORDER BY RAND() LIMIT 3");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

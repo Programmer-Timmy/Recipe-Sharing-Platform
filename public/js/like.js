@@ -1,6 +1,7 @@
 function like(id, session) {
     if (!session) {
-        document.cookie = "redirect=recipes";
+        redirect = document.location.href.split('/').pop()
+        document.cookie = "redirect=" + redirect;
         window.location.href = "login";
     }
     executelike(id)

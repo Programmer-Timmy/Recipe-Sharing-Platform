@@ -1,8 +1,9 @@
 <?php
 /** TODO make a login page!! and change this!! */
 if(!isset($_SESSION['userId'])){
-    header('Location: login');
     $_COOKIE['redirect'] = 'account';
+
+    header('Location: login');
 } else {
     $user = user::getUserById($_SESSION['userId']);
     $userRecipes = Recipes::getRecipeByUser($_SESSION['userId']);

@@ -11,4 +11,12 @@ class categories
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
+
+    public static function getRandomCategories()
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM categories ORDER BY RAND() LIMIT 6");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

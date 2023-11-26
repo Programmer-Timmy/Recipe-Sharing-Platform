@@ -89,7 +89,10 @@ $creatorImage = $creator ? $creator->img_url : ''; // Assuming imagePath is the 
                 </div>
                 </div>
                 <div class="mt-4">
-                    <button class="btn like-btn <?php echo user::getUserLikes($_SESSION['userId'], $recipe->id); ?>" id='likeButton_<?php echo $recipe->id; ?>' onclick='like(<?php echo $recipe->id; ?>, <?php echo $issetUser; ?>)'>
+                    <button class="btn like-btn <?php if (isset($_SESSION['userId'])) {
+                        echo user::getUserLikes($_SESSION['userId'], $recipe->id);
+                    } ?>" id='likeButton_<?php echo $recipe->id; ?>'
+                            onclick='like(<?php echo $recipe->id; ?>, <?php echo $issetUser; ?>)'>
                         <i class="fas fa-heart"></i> Like
                     </button>
                 </div>
