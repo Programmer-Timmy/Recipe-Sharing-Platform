@@ -24,7 +24,7 @@ public static function login($email, $password){
 
     public static function getUserById($id){
         global $conn;
-        $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country  FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
         return $stmt->fetchObject();

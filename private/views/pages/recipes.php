@@ -60,4 +60,3 @@ $issetUser = isset($_SESSION['userId'])?'true':'false';
         </div>
     </section>
 </div>
-<script src="js/search.js"></script>

@@ -18,7 +18,7 @@ class Recipes
         $stmt = $conn->prepare("SELECT * FROM recipes WHERE id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchObject();
     }
 
     public static function getRecipeByUser($id)

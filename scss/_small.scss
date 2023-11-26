@@ -37,51 +37,33 @@ body{
 
   .edit-btn {
     position: absolute;
+    width: 40px;
+    height: 40px;
     margin: 5px;
     left: 0;
-    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 30px;
-    transition: font-size 0.5s ease-in-out;
-
-    &:hover {
-      color: black;
-      font-size: 33px;
-    }
-
-    &:active {
-      color: black !important;
-      border-color: rgba(0, 0, 255, 0) !important;
-    }
   }
 
   .delete-btn{
     position: absolute;
     margin: 5px;
+    width: 40px;
+    height: 40px;
     left: 0;
-    top: 40px;
-    color: black;
+    top: 45px;
     font-size: 30px;
-    transition: font-size 0.5s ease-in-out;
-
-
-    &:hover {
-      color: black;
-      font-size: 33px;
-    }
-
-    &:active {
-      color: black !important;
-      border-color: rgba(255, 0, 0, 0) !important;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
 .liked .fas {
   color: red;
   transition: color 0.3s ease-in-out;
-  &:hover {
-    color: white;
-  }
   &:active {
     color: white !important;
     border-color: rgba(255, 0, 0, 0) !important;

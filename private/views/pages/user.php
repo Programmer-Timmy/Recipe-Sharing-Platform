@@ -1,50 +1,45 @@
 <?php
-/** TODO make a login page!! and change this!! */
-if(!isset($_SESSION['userId'])){
-    header('Location: login');
-    $_COOKIE['redirect'] = 'account';
+if (isset($_GET['id'])) {
+    $user = user::getUserById($_GET['id']);
+    $userRecipes = Recipes::getRecipeByUser($_GET['id']);
+    $issetUser = isset($_SESSION['userId'])?'true':'false';
 } else {
-    $user = user::getUserById($_SESSION['userId']);
-    $userRecipes = Recipes::getRecipeByUser($_SESSION['userId']);
+    header('location: recipes');
 }
+
 
 
 
 ?>
 <div class="container  mt-4">
     <section id="profile" class="bg-light rounded p-4">
-        <!-- Profile Section Content Goes Here -->
         <h2 class="mb-4 text-center">Profiel</h2>
-
         <div class="row">
-            <!-- User Image (on the left) -->
             <div class="col-md-4 text-center">
                 <img src="img/profilepic.jpg" alt="User Image" class="img-fluid rounded-circle mb-3" style="max-width: 150px; border: 4px solid #fff;">
                 <h3 class="font-weight-bold"><?php echo $user->username?></h3>
             </div>
 
-            <!-- User Information (on the right) -->
             <div class="col-md-8">
-                <!-- User Description -->
                 <p class="lead"><?php echo $user->description ?></p>
             </div>
         </div>
     </section>
     <br>
-    <!-- Your other HTML content -->
-
     <section id="recipes" class="recipe-section">
-        <!-- Recipe Section Content Goes Here -->
-        <h2 class="mb-4 text-center">Mijn Recepten</h2>
+        <h2 class="mb-4 text-center">Recepten</h2>
 
         <div class="row">
             <?php
             foreach($userRecipes as $userRecipe){
+                $liked = "";
+                if (isset($_SESSION['userId'])) {
+                    $liked = user::getUserLikes($_SESSION['userId'], $userRecipe->id);
+                }
                 echo"
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
-                    <a href='editRecipe?id=$userRecipe->id' class=\"btn btn-primary  edit-btn\"><i class=\"fa-solid fa-ellipsis\"></i></a>
-                    <a href='account?delte=$userRecipe->id' class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
+                <button class=\"btn like-btn $liked\" id='likeButton_$userRecipe->id' onclick='like($userRecipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
                     <a href=\"recipe?id=$userRecipe->id\" class=\"card-link\">
                         <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">

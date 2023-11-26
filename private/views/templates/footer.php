@@ -21,4 +21,11 @@ global $site;
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="/js/like.js"></script>
+<script src="/js/search.js"></script>
+<?php
+if (isset($_COOKIE['search'])){
+    echo "<script>searchProducts()</script>";
+    unset($_COOKIE['search']);
+}
+?>
 </body>
