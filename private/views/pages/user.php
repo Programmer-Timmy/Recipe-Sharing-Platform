@@ -2,10 +2,11 @@
 if (isset($_GET['id'])) {
     $user = user::getUserById($_GET['id']);
     $userRecipes = Recipes::getRecipeByUser($_GET['id']);
-    $issetUser = isset($_SESSION['userId'])?'true':'false';
 } else {
     header('location: recipes');
 }
+$issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
+
 
 
 
@@ -16,7 +17,8 @@ if (isset($_GET['id'])) {
         <h2 class="mb-4 text-center">Profiel</h2>
         <div class="row">
             <div class="col-md-4 text-center">
-                <img src="img/profilepic.jpg" alt="User Image" class="img-fluid rounded-circle mb-3" style="max-width: 150px; border: 4px solid #fff;">
+                <img src="<?php echo $user->img_url ?>" alt="User Image" class="img-fluid rounded-circle mb-3"
+                     style="max-width: 150px; border: 4px solid #fff;">
                 <h3 class="font-weight-bold"><?php echo $user->username?></h3>
             </div>
 

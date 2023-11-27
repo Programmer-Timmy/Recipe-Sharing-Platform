@@ -1,16 +1,28 @@
 <?php
+$wrong = false;
+
     if($_POST){
         if(user::login($_POST['email'], $_POST['password'])){
             header("Location: ".$_COOKIE['redirect']);
         }else{
-            echo 'Email of wachtwoord is onjuist';
+            $wrong = true;
         }
 
     }
 ?>
 
 <section class="w-100 p-4 d-flex justify-content-center pb-4">
+
+
     <form method="post" style="width: 22rem;">
+        <?php
+        if ($wrong) {
+
+            echo '<div class="alert alert-danger text-center" role="alert">
+        Wachtwoord of email is onjuist!
+    </div>';
+        }
+        ?>
         <!-- Email input -->
         <div class="form-outline mb-4">
             <input type="email" id="form2Example1" name="email" class="form-control">
@@ -44,7 +56,7 @@
 
         <!-- Register buttons -->
         <div class="text-center">
-            <p>Nog geen lid? <a href="#!">registreer</a></p>
+            <p>Nog geen lid? <a href="register">registreer</a></p>
         </div>
     </form>
 </section>

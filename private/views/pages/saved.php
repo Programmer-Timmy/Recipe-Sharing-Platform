@@ -1,6 +1,7 @@
 <?php
 if (!isset($_SESSION['userId'])) {
-    $_COOKIE['redirect'] = "saved";
+    setcookie('redirect', 'saved', time() + (86400 * 30), "/");
+
     header("Location: login");
 }
 $saved = Saved::getSavedByUser($_SESSION['userId']);
@@ -19,8 +20,8 @@ $saved = Saved::getSavedByUser($_SESSION['userId']);
                         <option selected>Sorteren op</option>
                         <option value="1">Nieuwste</option>
                         <option value="2">Oudste</option>
-                        <option value="3">Meeste likes</option>
-                        <option value="4">Minste likes</option>
+                        <option value="3">Meeste vieuws</option>
+                        <option value="4">Minste vieuws</option>
                     </select>
                 </form>
             </div>

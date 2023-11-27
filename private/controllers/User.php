@@ -8,7 +8,6 @@ public static function login($email, $password){
     $stmt->bindValue(1, $email);
     $stmt->execute();
     $user = $stmt->fetchObject();
-    var_dump($user);
     if($user == null){
         return false;
     }else{
@@ -41,6 +40,21 @@ public static function login($email, $password){
         } else {
             return "liked";
         }
+    }
+
+    public static function register($username, $lastname, $firstname, $email, $password, $country)
+    {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO users (username, lastname, firstname, email, password_hash, country_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bindValue(1, htmlspecialchars($username));
+        $stmt->bindValue(2, htmlspecialchars($lastname));
+        $stmt->bindValue(3, htmlspecialchars($firstname));
+        $stmt->bindValue(4, htmlspecialchars($email));
+        $stmt->bindValue(5, password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindValue(6, $country);
+        $stmt->execute();
+
+        return true;
     }
 }
 
