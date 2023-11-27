@@ -27,7 +27,7 @@ try {
     $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     if ($results == null) {
-        echo "<h1 style='text-align: center;'>No results found</h1>";
+        echo "<h1 style='text-align: center;'>Geen recepten gevonden.</h1>";
     }else {
         foreach ($results as $recipe) {
             $liked = '';

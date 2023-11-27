@@ -25,27 +25,21 @@ if (isset($_GET['delte'])) {
         echo '<div class="alert alert-danger" role="alert">Er is iets misgegaan met het verwijderen van het recept.</div>';
     } ?>
     <section id="profile" class="bg-light rounded p-4">
-        <!-- Profile Section Content Goes Here -->
         <h2 class="mb-4 text-center">Profiel</h2>
 
         <div class="row">
-            <!-- User Image (on the left) -->
             <div class="col-md-4 text-center">
                 <img src="<?php echo $user->img_url ?>" alt="User Image" class="img-fluid rounded-circle mb-3"
                      style="max-width: 150px; border: 4px solid #fff;">
                 <h3 class="font-weight-bold"><?php echo $user->username?></h3>
             </div>
 
-            <!-- User Information (on the right) -->
             <div class="col-md-8">
-                <!-- User Description -->
                 <p class="lead"><?php echo $user->description ?></p>
             </div>
         </div>
     </section>
     <br>
-    <!-- Your other HTML content -->
-
     <section id="recipes" class="recipe-section">
         <div class="row justify-content-end">
             <div class="col-md-6 mb-2">

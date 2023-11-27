@@ -1,7 +1,5 @@
 <?php
 $recipes = Recipes::getRecipes();
-/** todo add user for likes */
-
 $issetUser = isset($_SESSION['userId'])?'true':'false';
 ?>
 
@@ -21,31 +19,30 @@ $issetUser = isset($_SESSION['userId'])?'true':'false';
                         <option value="3">Meeste likes</option>
                         <option value="4">Minste likes</option>
                     </select>
-
-
+                </form>
             </div>
         </div>
         <div class="row" id="search-results">
             <?php
-            foreach($recipes as $recipe){
+            foreach ($recipes as $recipe) {
                 $liked = "";
                 if (isset($_SESSION['userId'])) {
                     $liked = user::getUserLikes($_SESSION['userId'], $recipe->id);
                 }
-                echo"
-                <div class=\"col-md-4 mb-4 d-flex\">
-                <div class=\"card flex-fill\">
-                    <button class=\"btn like-btn $liked\" id='likeButton_$recipe->id' onclick='like($recipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
-                    
-                    <a href=\"recipe?id=$recipe->id\" class=\"card-link\">
-                        <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$recipe->title\">
-                        <div class=\"card-body\">
-                            <h5 class=\"card-title\">$recipe->title</h5>
-                            <p class=\"card-text\">$recipe->description</p>
-                        </div>
-                        <div class=\"card-footer d-flex justify-content-between flex-wrap\">";
-                        $categories = Categories::getCategoriesByRecipes($recipe->id);
-                        foreach($categories as $category){
+                echo "
+                                        <div class=\"col-md-4 mb-4 d-flex\">
+                                        <div class=\"card flex-fill\">
+                                            <button class=\"btn like-btn $liked\" id='likeButton_$recipe->id' onclick='like($recipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
+                                            
+                                            <a href=\"recipe?id=$recipe->id\" class=\"h-100 d-flex flex-column card-link\">
+                                                <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$recipe->title\">
+                                                <div class=\"card-body\">
+                                                    <h5 class=\"card-title\">$recipe->title</h5>
+                                                    <p class=\"card-text\">$recipe->description</p>
+                                                </div>
+                                                <div class=\"card-footer d-flex justify-content-between flex-wrap\">";
+                $categories = Categories::getCategoriesByRecipes($recipe->id);
+                foreach ($categories as $category) {
                             echo"<span class=\"badge bg-primary mr-2\">".$category->name."</span>";
                         }
                         echo"

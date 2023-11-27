@@ -30,9 +30,11 @@ if ($position !== false) {
 
             </ul>
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                <?php
-                    if($require == '/recipes')echo'<input class="form-control me-2" type="search" id="search" name="search"  placeholder="Search" aria-label="Search">';
-                ?>
+                <input class="form-control me-2" type="search" id="search" name="search"
+                       value="<?php if (isset($_COOKIE['search'])) {
+                           echo $_COOKIE['search'];
+                       } ?>" placeholder="Search" aria-label="Search">';
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#"><i
