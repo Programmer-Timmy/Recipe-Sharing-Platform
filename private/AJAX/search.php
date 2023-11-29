@@ -1,5 +1,5 @@
 <?php
-require_once ('../private/config/settings.php');
+require_once('../private/config/settings.php');
 // Include your database connection file
 global $database;
 
@@ -8,7 +8,7 @@ $username = $database['user'];
 $password = $database['password'];
 $dbname = $database['database'];
 
-$issetUser = isset($_SESSION['userId'])?'true':'false';
+$issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -18,14 +18,10 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-    $search = $_GET['query'];
+$search = $_GET['query'];
 $sortby = $_GET['sortby'];
-$categoryFilter = $_GET['categoryFilter'];
+$categoryFilter = $_GET['category'];
 
-if ($categoryFilter != 0) {
-        
-
-}
 
 switch ($sortby) {
     case 1:
@@ -43,23 +39,24 @@ switch ($sortby) {
     default:
         $sortby = "";
 }
-$stmt = $conn->prepare("SELECT * FROM recipes WHERE title LIKE ? $sortby");
-    $stmt->bindValue(1, '%' . $search . '%');
-    $stmt->execute();
+if ($categoryFilter == 0) {
+    $results = Recipes::getRecipesWithSearch($search, $sortby);
 
-    $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+} else {
+    $results = Recipes::getRecipesWithSearchAndCategory($search, $categoryFilter, $sortby);
 
+}
 
-    if ($results == null) {
-        echo "<h1 style='text-align: center;'>Geen recepten gevonden.</h1>";
-    }else {
-        foreach ($results as $recipe) {
-            $liked = '';
-            if (isset($_SESSION['userId'])) {
-                $liked = user::getUserLikes($_SESSION['userId'], $recipe->id);
-            }
+if ($results == null) {
+    echo "<h1 style='text-align: center;'>Geen recepten gevonden.</h1>";
+} else {
+    foreach ($results as $recipe) {
+        $liked = '';
+        if (isset($_SESSION['userId'])) {
+            $liked = user::getUserLikes($_SESSION['userId'], $recipe->id);
+        }
 
-            echo "
+        echo "
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                     <button class=\"btn like-btn $liked\" id='likeButton_$recipe->id' onclick='like($recipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
@@ -70,16 +67,16 @@ $stmt = $conn->prepare("SELECT * FROM recipes WHERE title LIKE ? $sortby");
                             <p class=\"card-text\">$recipe->description</p>
                         </div>
                         <div class=\"card-footer d-flex justify-content-between flex-wrap\">";
-            $categories = Categories::getCategoriesByRecipes($recipe->id);
-            foreach ($categories as $category) {
-                echo "<span class=\"badge bg-primary mr-2\">" . $category->name . "</span>";
-            }
-            echo "
+        $categories = Categories::getCategoriesByRecipes($recipe->id);
+        foreach ($categories as $category) {
+            echo "<span class=\"badge bg-primary mr-2\">" . $category->name . "</span>";
+        }
+        echo "
                         </div>
                     </a>
                 </div>
             </div>
                 
                 ";
-        }
     }
+}

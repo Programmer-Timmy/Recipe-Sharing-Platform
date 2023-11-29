@@ -1,3 +1,4 @@
+
 <div class="profile-container">
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
          aria-hidden="true">
@@ -7,8 +8,9 @@
                     <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form id="profileForm" method="post" enctype="multipart/form-data">
+                <form id="profileForm" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+
                         <div>
                             <div class="d-flex justify-content-center mb-4">
                                 <img id="selectedAvatar" src="<?php echo $user->img_url ?>"
@@ -17,9 +19,11 @@
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="btn btn-primary btn-rounded">
-                                    <label class="form-label text-white m-1" for="customFile2">Choose file</label>
-                                    <input type="file" class="form-control d-none" id="customFile2"
+                                    <label class="form-label text-white m-1" for="customFile2">Choose file
+                                        <input type="file" class="form-control d-none" accept="image/*" name="avatar"
+                                               id="customFile2"
                                            onchange="displaySelectedImage(event, 'selectedAvatar')"/>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -31,13 +35,13 @@
                         <label for="bio" class="form-label">Bio:</label>
                         <textarea id="bio" class="form-control" name="bio"
                                   placeholder="Enter bio"><?php echo $user->description ?></textarea>
-                    </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Opslaan">
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

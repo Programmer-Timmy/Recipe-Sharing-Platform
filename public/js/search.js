@@ -27,3 +27,7 @@ myTextBox.addEventListener('input', function(){
 document.getElementById('sortby').addEventListener('change', function () {
     searchProducts();
 });
+
+document.getElementById('categoryFilter').addEventListener('change', function () {
+    searchProducts();
+});

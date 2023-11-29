@@ -68,6 +68,69 @@ class Recipes
     }
 
     /**
+     * @param $search
+     * @param $sortby
+     * @return array|false
+     */
+    public static function getRecipesWithSearch($search, $sortby)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM recipes WHERE title LIKE ? $sortby");
+        $stmt->bindValue(1, '%' . $search . '%');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * @param $search
+     * @param $category
+     * @param $sortby
+     * @return array|false
+     */
+    public static function getRecipesWithSearchAndCategory($search, $category, $sortby)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT recipes.id, recipes.title, recipes.description, recipes.img_url, recipes.created_at, recipes.likes FROM recipes_categories INNER JOIN recipes ON (recipes_categories.recipes_id = recipes.id) WHERE categories_id = ? AND title LIKE ? $sortby");
+        $stmt->bindValue(1, $category);
+        $stmt->bindValue(2, '%' . $search . '%');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function getRecipesByCategory($category)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT recipes.id, recipes.title, recipes.description, recipes.img_url, recipes.created_at, recipes.likes FROM recipes_categories INNER JOIN recipes ON (recipes_categories.recipes_id = recipes.id) WHERE categories_id = ?");
+        $stmt->bindValue(1, $category);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * @param $id
+     * @return void
+     */
+    public static function addLike($id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("UPDATE recipes SET likes = likes + 1 WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+    }
+
+    /**
+     * @param $id
+     * @return void
+     */
+    public static function removeLike($id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("UPDATE recipes SET likes = likes - 1 WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+    }
+
+    /**
      * @param $title
      * @param $instructions
      * @param $description

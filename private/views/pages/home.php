@@ -67,7 +67,7 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
                     <div class=" d-flex flex-wrap justify-content-evenly">
                         <?php
                         foreach ($randomCategories as $category) {
-                            echo "<a href=\"category?id=$category->id\" class=\"btn btn-primary mr-2x w-25 m-3 p-3\">$category->name</a>";
+                            echo "<a href=\"recipes?category=$category->id\" class=\"btn btn-primary mr-2x w-25 m-3 p-3\">$category->name</a>";
                         }
                         ?>
                     </div>

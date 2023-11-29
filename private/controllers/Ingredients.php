@@ -21,7 +21,7 @@ class Ingredients
     public static function getIngredients()
     {
         global $conn;
-        $stmt = $conn->prepare("SELECT * FROM ingredients");
+        $stmt = $conn->prepare("SELECT * FROM ingredients ORDER BY name ASC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
 

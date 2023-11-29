@@ -79,5 +79,74 @@ public static function login($email, $password){
 
         return true;
     }
+
+    public static function updateUserPage($username, $bio, $image, $id)
+    {
+        $user = self::getUserById($id);
+        if ($image['name'] !== '') {
+            if ($user->img_url !== 'img/defaultProfilePic.jpg') {
+                self::deleteImg($user->img_url);
+            }
+            $image = self::uploadImg($image);
+            if ($image == false) {
+                return false;
+            }
+        } else {
+            $image = $user->img_url;
+        }
+        global $conn;
+        $stmt = $conn->prepare("UPDATE users SET username = ?, description = ?, img_url = ? WHERE id = ?");
+        $stmt->bindValue(1, htmlspecialchars($username));
+        $stmt->bindValue(2, htmlspecialchars($bio));
+        $stmt->bindValue(3, $image);
+        $stmt->bindValue(4, $id);
+        $stmt->execute();
+
+        return true;
+    }
+
+    private static function uploadImg($image)
+    {
+        if (!file_exists('img/' . $_SESSION['userId'])) {
+            mkdir('img/' . $_SESSION['userId'], 0777, true);
+        }
+        $target_dir = "img/" . $_SESSION['userId'] . "/" . uniqid();
+        $target_file = $target_dir . basename($image["name"]);
+        var_dump($target_file);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $target_file = $target_dir . uniqid() . '.' . $imageFileType;
+        $check = getimagesize($image["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            return false;
+        }
+        if (file_exists($target_file)) {
+            return false;
+        }
+        if ($image["size"] > 500000) {
+            return false;
+        }
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+            return false;
+        }
+        if ($uploadOk == 0) {
+            return false;
+        } else {
+            if (move_uploaded_file($image["tmp_name"], $target_file)) {
+                return $target_file;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private static function deleteImg($img_url)
+    {
+        if (file_exists($img_url)) {
+            unlink($img_url);
+        }
+    }
 }
 

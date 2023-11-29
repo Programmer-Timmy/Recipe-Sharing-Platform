@@ -8,11 +8,10 @@ if (!$recipe) {
 $commented = false;
 $comments = comments::getCommentsByRecipeId($recipe->id);
 
-
+$issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
 if (!isset($_SESSION['userId'])) {
     setcookie('redirect', "recipe?id=" . $_GET['id'], time() + 3600, '/');
 } else {
-    $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
     foreach ($comments as $comment) {
         if ($comment->user_id == $_SESSION['userId']) {
             $commented = true;

@@ -19,26 +19,12 @@ require_once ('../private/config/settings.php');
 
     global $conn;
 
-    $stmt = $conn->prepare("SELECT * FROM user_recipes WHERE users_id LIKE ? and recipes_id LIKE ?");
-    $stmt->bindValue(1, $_SESSION['userId']);
-    $stmt->bindValue(2, $search);
-    $stmt->execute();
-    if ($stmt->fetchObject() == null) {
-        $stmt = $conn->prepare("INSERT INTO user_recipes (users_id, recipes_id) VALUES (?,?)");
-        $stmt->bindValue(1, $_SESSION['userId']);
-        $stmt->bindValue(2, $search);
-        $stmt->execute();
+$isSaved = Saved::isSaved($search, $_SESSION['userId']);
 
-        $stmt = $conn->prepare("UPDATE recipes SET likes = likes + 1 WHERE id = ?");
-        $stmt->bindValue(1, $search);
-        $stmt->execute();
+if ($isSaved == null) {
+    Saved::saveRecipe($search, $_SESSION['userId']);
+    Recipes::addLike($search);
     } else {
-        $stmt = $conn->prepare("DELETE FROM user_recipes WHERE users_id LIKE ? and recipes_id LIKE ?");
-        $stmt->bindValue(1, $_SESSION['userId']);
-        $stmt->bindValue(2, $search);
-        $stmt->execute();
-
-        $stmt = $conn->prepare("UPDATE recipes SET likes = likes - 1 WHERE id = ?");
-        $stmt->bindValue(1, $search);
-        $stmt->execute();
+    Saved::deleteSavedRecipe($search, $_SESSION['userId']);
+    Recipes::removeLike($search);
     }

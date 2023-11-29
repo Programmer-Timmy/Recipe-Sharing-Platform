@@ -32,7 +32,7 @@ class categories
     public static function getAllCategories()
     {
         global $conn;
-        $stmt = $conn->prepare("SELECT * FROM categories");
+        $stmt = $conn->prepare("SELECT * FROM categories ORDER BY name ASC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

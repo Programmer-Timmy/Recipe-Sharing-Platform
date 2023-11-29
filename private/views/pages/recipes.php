@@ -1,7 +1,12 @@
 <?php
-$recipes = Recipes::getRecipes();
 $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
 $categories = Categories::getAllCategories(); // Assuming you have a method to get all categories
+
+if (isset($_GET['category'])) {
+    $recipes = Recipes::getRecipesByCategory($_GET['category']);
+} else {
+    $recipes = Recipes::getRecipes();
+}
 ?>
 
 <div class="container mt-4">
@@ -15,7 +20,14 @@ $categories = Categories::getAllCategories(); // Assuming you have a method to g
                     <select class="form-select" id="categoryFilter" aria-label="Default select example">
                         <option value="0" selected>Filter op categorie</option>
                         <?php foreach ($categories as $category) : ?>
-                            <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?></option>
+                        <?php
+                        $selected = "";
+                        if (isset($_GET['category']) && $_GET['category'] == $category->id) {
+                            $selected = "selected";
+                        }
+                        ?>
+
+                        <option value="<?php echo $category->id . '" ' . $selected; ?>><?php echo $category->name; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </form>
@@ -38,11 +50,7 @@ $categories = Categories::getAllCategories(); // Assuming you have a method to g
         <div class="row" id="search-results">
             <?php
             foreach ($recipes as $recipe) {
-                // Check if the recipe belongs to the selected category (if any)
-                $categoryId = isset($_GET['category']) ? $_GET['category'] : 0;
-                $belongsToCategory = ($categoryId == 0) || Categories::recipeBelongsToCategory($recipe->id, $categoryId);
 
-                if ($belongsToCategory) {
                     $liked = "";
                     if (isset($_SESSION['userId'])) {
                         $liked = user::getUserLikes($_SESSION['userId'], $recipe->id);
@@ -68,7 +76,7 @@ $categories = Categories::getAllCategories(); // Assuming you have a method to g
                             </div>
                         </div>
                     ";
-                }
+
             }
             ?>
         </div>

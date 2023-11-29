@@ -16,13 +16,21 @@ if (isset($_GET['delete'])) {
         $error = true;
     }
 }
+if ($_POST) {
+    if (User::updateUserPage($_POST['username'], $_POST['bio'], $_FILES['avatar'], $_SESSION['userId'])) {
+        header('Location: account');
+    } else {
+        $error = true;
+    }
+}
+
 
 
 
 ?>
 <div class="container  mt-4">
     <?php if ($error) {
-        echo '<div class="alert alert-danger" role="alert">Er is iets misgegaan met het verwijderen van het recept.</div>';
+        echo '<div class="alert alert-danger" role="alert">Oeps er is iets misgegaan.</div>';
     } ?>
     <section id="profile" class="bg-light rounded p-4">
         <div class="row justify-content-end">
@@ -40,7 +48,7 @@ if (isset($_GET['delete'])) {
             <div class="col-md-4 text-center">
                 <img src="<?php echo $user->img_url ?>" alt="User Image" class="img-fluid rounded-circle mb-3"
                      style="max-width: 150px; border: 4px solid #fff;">
-                <h3 class="font-weight-bold"><?php echo $user->username?></h3>
+                <h3 class="font-weight-bold"><?php echo ucfirst($user->username) ?></h3>
             </div>
 
             <div class="col-md-8">
