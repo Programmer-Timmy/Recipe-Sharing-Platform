@@ -32,10 +32,54 @@ public static function login($email, $password){
      */
     public static function getUserById($id){
         global $conn;
-        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country  FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
+        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country, country_id FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
         return $stmt->fetchObject();
+    }
+
+    /**
+     * @param $firstname
+     * @param $lastname
+     * @param $email
+     * @param $country
+     * @param $id
+     * @return true
+     */
+    public static function updateUser($firstname, $lastname, $email, $country, $id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, country_id = ? WHERE id = ?");
+        $stmt->bindValue(1, htmlspecialchars($firstname));
+        $stmt->bindValue(2, htmlspecialchars($lastname));
+        $stmt->bindValue(3, htmlspecialchars($email));
+        $stmt->bindValue(4, $country);
+        $stmt->bindValue(5, $id);
+        $stmt->execute();
+
+        return true;
+    }
+
+    /**
+     * @param $password
+     * @param $id
+     * @return true
+     */
+    public static function updateUserPassword($password, $passwordRepeat, $id)
+    {
+        if ($password !== $passwordRepeat) {
+            return false;
+        }
+        if ($password == "") {
+            return false;
+        }
+        global $conn;
+        $stmt = $conn->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+        $stmt->bindValue(1, password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindValue(2, $id);
+        $stmt->execute();
+
+        return true;
     }
 
     /**
@@ -80,6 +124,13 @@ public static function login($email, $password){
         return true;
     }
 
+    /**
+     * @param $username
+     * @param $bio
+     * @param $image
+     * @param $id
+     * @return bool
+     */
     public static function updateUserPage($username, $bio, $image, $id)
     {
         $user = self::getUserById($id);
@@ -105,6 +156,10 @@ public static function login($email, $password){
         return true;
     }
 
+    /**
+     * @param $image
+     * @return false|string
+     */
     private static function uploadImg($image)
     {
         if (!file_exists('img/' . $_SESSION['userId'])) {
@@ -142,6 +197,10 @@ public static function login($email, $password){
         }
     }
 
+    /**
+     * @param $img_url
+     * @return void
+     */
     private static function deleteImg($img_url)
     {
         if (file_exists($img_url)) {
