@@ -19,12 +19,36 @@ try {
 }
 
     $search = $_GET['query'];
+$sortby = $_GET['sortby'];
+$categoryFilter = $_GET['categoryFilter'];
 
-    $stmt = $conn->prepare("SELECT * FROM recipes WHERE title LIKE ?");
+if ($categoryFilter != 0) {
+        
+
+}
+
+switch ($sortby) {
+    case 1:
+        $sortby = "ORDER BY created_at DESC";
+        break;
+    case 2:
+        $sortby = "ORDER BY created_at ASC";
+        break;
+    case 3:
+        $sortby = "ORDER BY likes DESC";
+        break;
+    case 4:
+        $sortby = "ORDER BY likes ASC";
+        break;
+    default:
+        $sortby = "";
+}
+$stmt = $conn->prepare("SELECT * FROM recipes WHERE title LIKE ? $sortby");
     $stmt->bindValue(1, '%' . $search . '%');
     $stmt->execute();
 
     $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+
 
     if ($results == null) {
         echo "<h1 style='text-align: center;'>Geen recepten gevonden.</h1>";
@@ -39,8 +63,8 @@ try {
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                     <button class=\"btn like-btn $liked\" id='likeButton_$recipe->id' onclick='like($recipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
-                    <a href=\"recipe?id=$recipe->id\" class=\"card-link\">
-                        <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$recipe->title\">
+                    <a href=\"recipe?id=$recipe->id\" class=\"card-link h-100 d-flex flex-column\">
+                        <img src=\"$recipe->img_url\" class=\"card-img-top\" alt=\"$recipe->title\">
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">$recipe->title</h5>
                             <p class=\"card-text\">$recipe->description</p>

@@ -13,17 +13,17 @@ $database = [
  * Site Settings
  */
 $site = [
-    'siteName' => 'Recepten delen aplicatie',
+    'siteName' => 'CookCook Connect',
     'debug' => true,
     'maintenance' => false,
-    'showPopup' => false,
-    'popupTitle' => 'Note',
-    'popupMessage' => 'This is a popup you can change it in the settings!',
+    'showPopup' => true,
+    'popupTitle' => 'Welkom op de website!',
+    'popupMessage' => 'Deze website is nog in ontwikkeling, het kan dus zijn dat er nog bugs in zitten.',
     'popupButtons' => [
-        [
-            'label' => 'Change button',
-            'action' => ''
-        ],
+//        [
+//            'label' => 'Change button',
+//            'action' => ''
+//        ],
         // Add more buttons as needed
     ]
 
@@ -38,6 +38,7 @@ $allowedIPs = ['::0'];
  * Page Title Settings
  */
 $url = $_SERVER['REQUEST_URI'];
+$url = explode('?', $url)[0];
 
 // If the URL is the root path, set it to '/home'
 if ($url == '/') {
@@ -47,10 +48,10 @@ if ($url == '/') {
 $titles = [
     'default' => substr($url, 1) . ' - ' . $site['siteName'],
     'maintenance' => 'Under Maintenance - ' . $site['siteName'],
-    'home' => 'Home Page - ' . $site['siteName'],
+    'home' => 'Home pagina - ' . $site['siteName'],
     'about' => 'About Us - ' . $site['siteName'],
     'contact' => 'Contact Us - ' . $site['siteName'],
-    '404' => '404 - Oops page not found!',
+    '404' => '404 - Oops pagina niet gevonden!',
 ];
 
 // Disable errors if debug is set to false

@@ -9,8 +9,8 @@ if(!isset($_SESSION['userId'])){
     $userRecipes = Recipes::getRecipeByUser($_SESSION['userId']);
 }
 
-if (isset($_GET['delte'])) {
-    if (Recipes::deleteRecipe($_GET['delte'], $_SESSION['userId'])) {
+if (isset($_GET['delete'])) {
+    if (Recipes::deleteRecipe($_GET['delete'], $_SESSION['userId'])) {
         header('Location: account');
     } else {
         $error = true;
@@ -25,7 +25,16 @@ if (isset($_GET['delte'])) {
         echo '<div class="alert alert-danger" role="alert">Er is iets misgegaan met het verwijderen van het recept.</div>';
     } ?>
     <section id="profile" class="bg-light rounded p-4">
-        <h2 class="mb-4 text-center">Profiel</h2>
+        <div class="row justify-content-end">
+            <div class="col-md-6 mb-2">
+                <h2 class="mb-4 text-center">Profiel</h2>
+            </div>
+            <div class="col-md-3 d-flex responive justify-content-end align-items-start">
+                <button id="editProfileBtn" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#editProfileModal">Edit Profile
+                </button>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-4 text-center">
@@ -45,7 +54,7 @@ if (isset($_GET['delte'])) {
             <div class="col-md-6 mb-2">
                 <h2 class="mb-4 text-center">Mijn recepten</h2>
             </div>
-            <div class="col-md-3 d-flex justify-content-end align-items-start">
+            <div class="col-md-3 d-flex responive justify-content-end align-items-start">
                 <a href="addRecipe" class="btn btn-primary">Voeg een recept toe</a>
             </div>
         </div>
@@ -57,9 +66,9 @@ if (isset($_GET['delte'])) {
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                     <a href='editRecipe?id=$userRecipe->id' class=\"btn btn-primary  edit-btn\"><i class=\"fa-solid fa-ellipsis\"></i></a>
-                    <a href='account?delte=$userRecipe->id' class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
+                    <a href='account?delete=$userRecipe->id' class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
                     <a href=\"recipe?id=$userRecipe->id\" class=\"card-link h-100 d-flex flex-column\">
-                        <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$userRecipe->title\">
+                        <img src=\"$userRecipe->img_url\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">$userRecipe->title</h5>
                             <p class=\"card-text\">$userRecipe->description</p>
@@ -67,7 +76,7 @@ if (isset($_GET['delte'])) {
                         <div class=\"card-footer d-flex justify-content-between flex-wrap\">";
                     $categories = Categories::getCategoriesByRecipes($userRecipe->id);
                     foreach ($categories as $category) {
-                        echo "<span class=\"badge bg-primary mr-2\">" . $category->name . "</span>";
+                        echo "<span class=\"badge bg-primary m-1\">" . $category->name . "</span>";
                     }
                     echo "
                         </div>
@@ -79,10 +88,10 @@ if (isset($_GET['delte'])) {
                 }
             } else {
                 echo "<h3 class='text-center'>Je hebt nog geen recepten toegevoegd</h3>";
-                //add a button to add a recipe
                 echo "<div class='d-flex justify-content-center'><a href='addRecipe' class='btn btn-primary'>Voeg een recept toe</a></div>";
             }
             ?>
         </div>
     </section>
+    <?php include_once __dir__ . '/../Popups/editprofile.php' ?>
 </div>

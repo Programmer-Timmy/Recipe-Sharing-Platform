@@ -6,6 +6,7 @@ function getPageTitle() {
 
     $pageTitle = ucfirst($titles['default']);
 
+
     // Find the corresponding title based on URL
     foreach ($titles as $urlPattern => $title) {
         if (strpos($url, $urlPattern) !== false) {
@@ -32,6 +33,10 @@ function getPageTitle() {
     <script src="https://kit.fontawesome.com/65416f0144.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Add this in your head tag -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+
 </head>
 <body>
 

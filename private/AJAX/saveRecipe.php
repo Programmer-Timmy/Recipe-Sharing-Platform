@@ -28,11 +28,17 @@ require_once ('../private/config/settings.php');
         $stmt->bindValue(1, $_SESSION['userId']);
         $stmt->bindValue(2, $search);
         $stmt->execute();
-        echo "liked";
+
+        $stmt = $conn->prepare("UPDATE recipes SET likes = likes + 1 WHERE id = ?");
+        $stmt->bindValue(1, $search);
+        $stmt->execute();
     } else {
         $stmt = $conn->prepare("DELETE FROM user_recipes WHERE users_id LIKE ? and recipes_id LIKE ?");
         $stmt->bindValue(1, $_SESSION['userId']);
         $stmt->bindValue(2, $search);
         $stmt->execute();
-        echo "unliked";
-}
+
+        $stmt = $conn->prepare("UPDATE recipes SET likes = likes - 1 WHERE id = ?");
+        $stmt->bindValue(1, $search);
+        $stmt->execute();
+    }

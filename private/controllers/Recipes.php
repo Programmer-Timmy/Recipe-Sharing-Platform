@@ -3,6 +3,9 @@
 class Recipes
 {
 
+    /**
+     * @return array|false
+     */
     public static function getRecipes()
     {
         global $conn;
@@ -12,6 +15,10 @@ class Recipes
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    /**
+     * @param $id
+     * @return $0|false|object|stdClass|null
+     */
     public static function getRecipe($id)
     {
         global $conn;
@@ -21,6 +28,10 @@ class Recipes
         return $stmt->fetchObject();
     }
 
+    /**
+     * @param $id
+     * @return array|false
+     */
     public static function getRecipeByUser($id)
     {
         global $conn;
@@ -30,6 +41,9 @@ class Recipes
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    /**
+     * @return array|false
+     */
     public static function getRandomRecipes()
     {
         global $conn;
@@ -38,6 +52,11 @@ class Recipes
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    /**
+     * @param $id
+     * @param $userId
+     * @return $0|false|object|stdClass|null
+     */
     public static function getRecipesByUserAndId($id, $userId)
     {
         global $conn;
@@ -48,11 +67,21 @@ class Recipes
         return $stmt->fetchObject();
     }
 
+    /**
+     * @param $title
+     * @param $instructions
+     * @param $description
+     * @param $image
+     * @param $user_id
+     * @param $categories
+     * @param $ingredients
+     * @param $amounts
+     * @return bool
+     */
     public static function createRecipe($title, $instructions, $description, $image, $user_id, $categories, $ingredients, $amounts)
     {
-        if ($image['name'] == '') {
-            $targetfile = 'img/default.png';
-        } else {
+        $targetfile = 'img/defaultImg.jpg';
+        if ($image['name'] !== '') {
             $targetfile = self::uploadImg($image);
             if ($targetfile == false) {
                 return false;
@@ -61,10 +90,10 @@ class Recipes
 
         global $conn;
         $stmt = $conn->prepare("INSERT INTO recipes (title, instructions, description, img_url, user_id) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bindValue(1, $title);
-        $stmt->bindValue(2, $instructions);
-        $stmt->bindValue(3, $description);
-        $stmt->bindValue(4, $targetfile);
+        $stmt->bindValue(1, htmlspecialchars($title));
+        $stmt->bindValue(2, htmlspecialchars($instructions));
+        $stmt->bindValue(3, htmlspecialchars($description));
+        $stmt->bindValue(4, htmlspecialchars($targetfile));
         $stmt->bindValue(5, $_SESSION['userId']);
         if ($stmt->execute() == false) {
             return false;
@@ -79,6 +108,18 @@ class Recipes
         return true;
     }
 
+    /**
+     * @param $id
+     * @param $title
+     * @param $instructions
+     * @param $description
+     * @param $image
+     * @param $user_id
+     * @param $categories
+     * @param $ingredients
+     * @param $amounts
+     * @return bool
+     */
     public static function updateRecipe($id, $title, $instructions, $description, $image, $user_id, $categories, $ingredients, $amounts)
     {
         $recipe = self::getRecipesByUserAndId($id, $user_id);
@@ -87,7 +128,9 @@ class Recipes
         }
 
         if ($image['name'] != '') {
-            self::deleteImg($recipe->img_url);
+            if ($recipe->img_url != 'img/defaultImg.png') {
+                self::deleteImg($recipe->img_url);
+            }
             $targetfile = self::uploadImg($image);
             if ($targetfile == false) {
                 return false;
@@ -98,10 +141,10 @@ class Recipes
 
         global $conn;
         $stmt = $conn->prepare("UPDATE recipes SET title = ?, instructions = ?, description = ?, img_url = ? WHERE id = ?");
-        $stmt->bindValue(1, $title);
-        $stmt->bindValue(2, $instructions);
-        $stmt->bindValue(3, $description);
-        $stmt->bindValue(4, $targetfile);
+        $stmt->bindValue(1, htmlspecialchars($title));
+        $stmt->bindValue(2, htmlspecialchars($instructions));
+        $stmt->bindValue(3, htmlspecialchars($description));
+        $stmt->bindValue(4, htmlspecialchars($targetfile));
         $stmt->bindValue(5, $id);
         if ($stmt->execute() == false) {
             return false;
@@ -117,11 +160,19 @@ class Recipes
 
     }
 
+    /**
+     * @param $id
+     * @param $user_id
+     * @return bool
+     */
     public static function deleteRecipe($id, $user_id)
     {
         $recipe = self::getRecipesByUserAndId($id, $user_id);
 
+        if ($recipe->img_url != 'img/defaultImg.png') {
         self::deleteImg($recipe->img_url);
+        }
+
 
         categories::deleteCategoriesFromRecipe($id);
         ingredients::deleteIngredientsFromRecipe($id);
@@ -138,6 +189,10 @@ class Recipes
         return true;
     }
 
+    /**
+     * @param $image
+     * @return false|string
+     */
     private static function uploadImg($image)
     {
         if (!file_exists('img/' . $_SESSION['userId'])) {
@@ -168,6 +223,10 @@ class Recipes
         }
     }
 
+    /**
+     * @param $image
+     * @return void
+     */
     private static function deleteImg($image)
     {
         if ($image != 'img/default.png') {

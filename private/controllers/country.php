@@ -2,6 +2,9 @@
 
 class country
 {
+    /**
+     * @return array|false
+     */
     public static function getAllCountries()
     {
         global $conn;

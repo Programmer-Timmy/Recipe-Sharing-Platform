@@ -37,8 +37,8 @@ $saved = Saved::getSavedByUser($_SESSION['userId']);
                                         <div class=\"card flex-fill\">
                                             <button class=\"btn like-btn liked\" id='likeButton_$recipe->recipes_id' onclick='like($recipe->recipes_id, \"true\")'><i class=\"fas fa-heart\"></i></button>
                                             
-                                            <a href=\"recipe?id=$recipe->recipes_id\" class=\"card-link\">
-                                                <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$recipe->title\">
+                                            <a href=\"recipe?id=$recipe->recipes_id\" class=\"card-link h-100 d-flex flex-column\">
+                                                <img src=\"$recipe->img_url\" class=\"card-img-top\" alt=\"$recipe->title\">
                                                 <div class=\"card-body\">
                                                     <h5 class=\"card-title\">$recipe->title</h5>
                                                     <p class=\"card-text\">$recipe->description</p>

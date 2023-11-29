@@ -15,7 +15,7 @@ if ($position !== false) {
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="home">Navbar</a>
+        <a class="navbar-brand" href="home">CookCook Connect</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,7 +27,6 @@ if ($position !== false) {
                 <li class="nav-item">
                     <a class="nav-link <?php if($require == '/recipes')echo"active"; ?>" aria-current="page" href="recipes">Recepten</a>
                 </li>
-
             </ul>
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                 <input class="form-control me-2" type="search" id="search" name="search"

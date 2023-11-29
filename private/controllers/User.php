@@ -2,6 +2,11 @@
 
 class user
 {
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     */
 public static function login($email, $password){
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
@@ -21,6 +26,10 @@ public static function login($email, $password){
     }
 }
 
+    /**
+     * @param $id
+     * @return $0|false|object|stdClass|null
+     */
     public static function getUserById($id){
         global $conn;
         $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country  FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
@@ -29,6 +38,11 @@ public static function login($email, $password){
         return $stmt->fetchObject();
     }
 
+    /**
+     * @param $id
+     * @param $recipeId
+     * @return string
+     */
     public static function getUserLikes($id, $recipeId){
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM user_recipes WHERE users_id = ? AND recipes_id = ?");
@@ -42,6 +56,15 @@ public static function login($email, $password){
         }
     }
 
+    /**
+     * @param $username
+     * @param $lastname
+     * @param $firstname
+     * @param $email
+     * @param $password
+     * @param $country
+     * @return true
+     */
     public static function register($username, $lastname, $firstname, $email, $password, $country)
     {
         global $conn;
