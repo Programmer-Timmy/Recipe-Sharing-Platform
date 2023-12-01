@@ -24,7 +24,7 @@ if (isset($_POST['password'])) {
 ?>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Accountinstellingen</h2>
+    <h2 class="text-center mb-4">Account instellingen</h2>
     <form method="post">
         <div class="mb-4">
             <?php if ($error) {

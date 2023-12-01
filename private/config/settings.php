@@ -51,6 +51,10 @@ $titles = [
     'home' => 'Home pagina - ' . $site['siteName'],
     'about' => 'About Us - ' . $site['siteName'],
     'contact' => 'Contact Us - ' . $site['siteName'],
+    'account_settings' => 'Account instellingen - ' . $site['siteName'],
+    'recipes' => 'Recepten - ' . $site['siteName'],
+    'account' => 'Profiel - ' . $site['siteName'],
+    'saved' => 'Opgeslagen - ' . $site['siteName'],
     '404' => '404 - Oops pagina niet gevonden!',
 ];
 

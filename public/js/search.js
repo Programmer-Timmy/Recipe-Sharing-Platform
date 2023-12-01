@@ -1,13 +1,12 @@
 function searchProducts() {
     var query = document.getElementById('search').value;
-    var sortby = document.getElementById('sortby').value;
-    var category = document.getElementById('categoryFilter').value;
-
-    if(document.location.href.split('/').pop() !== 'recipes') {
-        document.cookie = "search =" + query;
+    var url = document.location.href.split('/').pop().split('?')[0];
+    if (url !== 'recipes') {
+        document.cookie = "search=" + query + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         window.location.href = 'recipes';
     }else {
-        document.cookie = "search=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        var sortby = document.getElementById('sortby').value;
+        var category = document.getElementById('categoryFilter').value;
         $.ajax({
             url: 'search',
             type: 'GET',

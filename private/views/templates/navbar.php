@@ -41,6 +41,9 @@ if ($position !== false) {
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="account">Profiel</a></li>
                         <li><a class="dropdown-item" href="account_settings">Instellingen</a></li>
+                        <?php if (isset($_SESSION['admin'])) {
+                            echo '<li><a class="dropdown-item" href="admin">Beheer</a></li>';
+                        } ?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

@@ -17,6 +17,9 @@ public static function login($email, $password){
         return false;
     }else{
         if(password_verify($password, $user->password_hash)){
+            if ($user->admin == 1) {
+                $_SESSION['admin'] = true;
+            }
             $_SESSION['userId'] = $user->id;
             return true;
         }else{

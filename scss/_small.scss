@@ -18,6 +18,12 @@ footer {
 
   .card-body {
     color: black;
+
+    p {
+      overflow: hidden;
+      max-height: 200px;
+    }
+
   }
 
   .card-link {
@@ -269,4 +275,17 @@ a.btn.btn-primary.mr-2x.w-25.m-3.p-3 {
   transform: rotate(-90deg);
   font-weight: bold;
   z-index: 100;
+}
+
+#admin {
+  max-width: 800px;
+
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .card-body {
+    text-align: center;
+  }
 }
