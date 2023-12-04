@@ -51,6 +51,25 @@ class Ingredients
 
     /**
      * @param $recipe_id
+     * @param $ingredient
+     * @param $amount
+     * @return bool
+     *
+     */
+    public static function addIngredientToRecipe($recipe_id, $ingredient, $amount)
+    {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO recepies_ingredients (recipes_id, ingredients_id, quantity) VALUES (?, ?, ?)");
+        $stmt->bindValue(1, $recipe_id);
+        $stmt->bindValue(2, $ingredient);
+        $stmt->bindValue(3, $amount);
+        return $stmt->execute();
+    }
+
+
+
+    /**
+     * @param $recipe_id
      * @return void
      */
     public static function deleteIngredientsFromRecipe($recipe_id)
@@ -59,6 +78,15 @@ class Ingredients
         $stmt = $conn->prepare("DELETE FROM recepies_ingredients WHERE recipes_id = ?");
         $stmt->bindValue(1, $recipe_id);
         $stmt->execute();
+    }
+
+    public static function deleteIngredientFromRecipe($recipe_id, $ingredient_id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM recepies_ingredients WHERE recipes_id = ? AND ingredients_id = ?");
+        $stmt->bindValue(1, $recipe_id);
+        $stmt->bindValue(2, $ingredient_id);
+        return $stmt->execute();
     }
 
 }

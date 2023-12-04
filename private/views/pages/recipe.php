@@ -155,7 +155,8 @@ if (isset($_GET['delete'])) {
                             }
                             ?>
                         </div>
-                        <small class="text-muted">Geplaats op <?php echo $comment->timestamp; ?></small>
+                        <small class="text-muted">Geplaats op <?php $date = new DateTime($comment->timestamp);
+                            echo $date->format('d-m-Y H:i:s'); ?></small>
                     </div>
                 </div>
 

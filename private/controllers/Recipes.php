@@ -10,7 +10,7 @@ class Recipes
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT * FROM recipes");
+        $stmt = $conn->prepare("SELECT recipes.*, users.firstname, users.lastname FROM recipes join users on recipes.user_id = users.id");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -244,6 +244,29 @@ class Recipes
         $stmt = $conn->prepare("DELETE FROM recipes WHERE id = ? and user_id = ?");
         $stmt->bindValue(1, $id);
         $stmt->bindValue(2, $user_id);
+        if ($stmt->execute() == false) {
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public static function delteRecipeAdmin($id)
+    {
+        $recipe = self::getRecipe($id);
+
+        if ($recipe->img_url != 'img/defaultImg.png') {
+            self::deleteImg($recipe->img_url);
+        }
+
+
+        categories::deleteCategoriesFromRecipe($id);
+        ingredients::deleteIngredientsFromRecipe($id);
+
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM recipes WHERE id = ? ");
+        $stmt->bindValue(1, $id);
         if ($stmt->execute() == false) {
             return false;
         }

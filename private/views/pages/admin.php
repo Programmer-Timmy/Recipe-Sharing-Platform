@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Recipes</h5>
                     <p class="card-text">Manage recipes in the admin panel.</p>
-                    <a href="recipes" class="btn btn-primary">Go to Recipes</a>
+                    <a href="admin_recipes" class="btn btn-primary">Go to Recipes</a>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Users</h5>
                     <p class="card-text">Manage users in the admin panel.</p>
-                    <a href="users" class="btn btn-primary">Go to Users</a>
+                    <a href="admin_users" class="btn btn-primary">Go to Users</a>
                 </div>
             </div>
         </div>

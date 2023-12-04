@@ -35,7 +35,7 @@ public static function login($email, $password){
      */
     public static function getUserById($id){
         global $conn;
-        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country, country_id FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
+        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country, country_id, admin FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
         return $stmt->fetchObject();
@@ -209,6 +209,32 @@ public static function login($email, $password){
         if (file_exists($img_url)) {
             unlink($img_url);
         }
+    }
+
+    /**
+     * @return array|false
+     */
+    public static function getAllUsers()
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT users.*, countries.name FROM users join countries on users.country_id = countries.id");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function updateUserAdmin($id, $username, $firstname, $lastname, $email, $description, $admin, $iamge, $country)
+    {
+        global $conn;
+        $stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, description = ?, admin = ? WHERE id = ?");
+        $stmt->bindValue(1, htmlspecialchars($firstname));
+        $stmt->bindValue(2, htmlspecialchars($lastname));
+        $stmt->bindValue(3, htmlspecialchars($email));
+        $stmt->bindValue(4, htmlspecialchars($description));
+        $stmt->bindValue(5, $admin);
+        $stmt->bindValue(6, $id);
+        $stmt->execute();
+
+        return true;
     }
 }
 
