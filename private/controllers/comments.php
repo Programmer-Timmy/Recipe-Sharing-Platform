@@ -76,4 +76,12 @@ class comments
         $stmt->bindValue(4, $user_id);
         return $stmt->execute();
     }
+
+    public static function deleteCommentsByRecipeId($id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM comments WHERE recipes_id = ?");
+        $stmt->bindValue(1, $id);
+        return $stmt->execute();
+    }
 }

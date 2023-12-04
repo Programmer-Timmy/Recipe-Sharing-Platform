@@ -260,7 +260,6 @@ class Recipes
             self::deleteImg($recipe->img_url);
         }
 
-
         categories::deleteCategoriesFromRecipe($id);
         ingredients::deleteIngredientsFromRecipe($id);
 
@@ -273,6 +272,33 @@ class Recipes
 
 
         return true;
+    }
+
+    /**
+     * @param $id
+     * @return void
+     */
+    public static function deleteAllRecipesByUserId($id)
+    {
+        $recipes = Recipes::getRecipeByUser($id);
+
+        // delete comments, categories and ingredients from recipes
+        // delete images from recipes
+        foreach ($recipes as $recipe) {
+            if ($recipe->img_url != 'img/defaultImg.png') {
+                self::deleteImg($recipe->img_url);
+            }
+
+            comments::deleteCommentsByRecipeId($recipe->id);
+            categories::deleteCategoriesFromRecipe($recipe->id);
+            ingredients::deleteIngredientsFromRecipe($recipe->id);
+        }
+        // delete recipes from user
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM recipes WHERE user_id = ? ");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
     }
 
     /**

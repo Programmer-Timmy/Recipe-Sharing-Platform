@@ -9,18 +9,25 @@ if (!isset($_SESSION['userId'])) {
 
 $error = false;
 
-// Assume you have a function to get user details by ID
 $user = User::getUserById($_GET['id']);
 
 if ($_POST) {
-    // Assume you have a function to update user information
-    User::updateUserAdmin($_GET['id'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['description'], $_POST['admin']);
-    header('location: admin_editUsers');
+    if (isset($_POST['admin'])) {
+        $admin = 1;
+    } else {
+        $admin = 0;
+    }
+
+    User::updateUserAdmin($_GET['id'], $_POST['username'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['description'], $admin, $_FILES['image'], $_POST['country'], $user->img_url);
+    header('location: admin_users');
 }
 ?>
 
 <div class="container mt-5 custom-container">
-    <h2 class="mb-4">Edit User <?php echo "$user->firstname $user->lastname" ?></h2>
+    <div class="d-flex align-items-start justify-content-between">
+        <h2 class="mb-4">Bewerk gebruiker <?php echo "$user->firstname $user->lastname" ?></h2>
+        <a class="btn btn-primary" href="admin_users">Terug naar gebruikers</a>
+    </div>
 
     <?php if ($error) : ?>
         <div class="alert alert-danger" role="alert">
@@ -28,7 +35,7 @@ if ($_POST) {
         </div>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="firstname">Voornaam:</label>
@@ -37,23 +44,39 @@ if ($_POST) {
         </div>
         <div class="form-group">
             <label for="lastname">Achternaam:</label>
-            <input type="text" maxlength="40" class="form-control" id="lastname" name="lastname"
+            <input type="text" maxlength="40" class="form-control" id="lastname" required name="lastname"
                    value="<?php echo $user->lastname ?>">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" maxlength="100" class="form-control" id="email" name="email"
+            <input type="email" maxlength="100" class="form-control" id="email" required name="email"
                    value="<?php echo $user->email ?>">
         </div>
         <div class="form-group">
             <label for="firstname">Gebruikersnaam:</label>
-            <input type="text" maxlength="40" class="form-control" id="firstname" name="username"
+            <input type="text" maxlength="40" class="form-control" id="firstname" required name="username"
                    value="<?php echo $user->username ?>">
         </div>
         <div class="form-group">
             <label for="description">Beschrijving:</label>
             <textarea class="form-control" id="description"
                       name="description"><?php echo $user->description ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="country">Land:</label>
+            <select class="form-select" id="country" required name="country" aria-label="Selecteer uw land">
+                <?php
+                $countries = country::getAllCountries();
+                foreach ($countries as $country) {
+                    $selected = "";
+                    if ($country->id == $user->country_id) {
+                        $selected = "selected";
+                    }
+                    echo "<option $selected value='$country->id'>$country->name</option>";
+
+                }
+                ?>
+            </select>
         </div>
         <div class="form-group">
             <label for="image" class="form-label">Afbeelding</label>
@@ -68,3 +91,4 @@ if ($_POST) {
         <button type="submit" class="btn btn-primary">Opslaan</button>
     </form>
 </div>
+

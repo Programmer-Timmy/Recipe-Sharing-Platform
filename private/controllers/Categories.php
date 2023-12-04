@@ -88,4 +88,12 @@ class categories
         $stmt->bindValue(2, $categorie_id);
         return $stmt->execute();
     }
+
+    public static function deleteByUserId($id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        return $stmt->execute();
+    }
 }

@@ -222,19 +222,59 @@ public static function login($email, $password){
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public static function updateUserAdmin($id, $username, $firstname, $lastname, $email, $description, $admin, $iamge, $country)
+    /**
+     * @param $id
+     * @param $username
+     * @param $firstname
+     * @param $lastname
+     * @param $email
+     * @param $description
+     * @param $admin
+     * @param $image
+     * @param $country
+     * @param $oldImgUrl
+     * @return bool
+     */
+    public static function updateUserAdmin($id, $username, $firstname, $lastname, $email, $description, $admin, $image, $country, $oldImgUrl)
     {
+
+        if ($image['name'] !== '') {
+            if ($oldImgUrl !== 'img/defaultProfilePic.jpg') {
+                self::deleteImg($oldImgUrl);
+            }
+            $image = self::uploadImg($image);
+            if ($image == false) {
+                return false;
+            }
+        } else {
+            $image = $oldImgUrl;
+        }
+
         global $conn;
-        $stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, description = ?, admin = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, description = ?, admin = ?, img_url = ?, country_id = ?, username = ?  WHERE id = ?");
         $stmt->bindValue(1, htmlspecialchars($firstname));
         $stmt->bindValue(2, htmlspecialchars($lastname));
         $stmt->bindValue(3, htmlspecialchars($email));
         $stmt->bindValue(4, htmlspecialchars($description));
         $stmt->bindValue(5, $admin);
-        $stmt->bindValue(6, $id);
+        $stmt->bindValue(6, $image);
+        $stmt->bindValue(7, $country);
+        $stmt->bindValue(8, htmlspecialchars($username));
+        $stmt->bindValue(9, $id);
         $stmt->execute();
 
         return true;
+    }
+
+    public static function deleteByUserId($id)
+    {
+
+        Recipes::deleteAllRecipesByUserId($id);
+
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
     }
 }
 

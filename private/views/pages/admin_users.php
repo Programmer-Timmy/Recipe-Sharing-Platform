@@ -23,7 +23,11 @@ if (isset($_GET['delete'])) {
 ?>
 
 <div class="container mt-5 custom-container">
-    <h2 class="mb-4">Edit Users</h2>
+    <div class="d-flex align-items-start justify-content-between">
+        <h2 class="mb-4">Gebruikers</h2>
+        <a class="btn btn-primary" href="admin">Terug naar beheerdersdashboard</a>
+
+    </div>
 
     <?php if ($error) : ?>
         <div class="alert alert-danger" role="alert">
@@ -64,7 +68,7 @@ if (isset($_GET['delete'])) {
 
                     <td><?php echo $user->name ?></td>
                     <td><a class="btn btn-primary" href="admin_editUser?id=<?php echo $user->id ?>">Edit</a></td>
-                    <td><a class="btn btn-danger" href="admin_User?delete=<?php echo $user->id ?>"
+                    <td><a class="btn btn-danger" href="admin_Users?delete=<?php echo $user->id ?>"
                            onclick="return confirm('Weet je het zeker dat je deze gebruiker wilt verwijderen');">Delete</a>
                     </td>
                 </tr>
