@@ -58,4 +58,24 @@ class Saved
         $stmt->bindValue(2, $recipe_id);
         $stmt->execute();
     }
+
+    /**
+     * @param $user_id
+     * @return void
+     */
+    public static function deleteAllSavedByUserId($user_id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM user_recipes WHERE users_id = ?");
+        $stmt->bindValue(1, $user_id);
+        $stmt->execute();
+    }
+
+    public static function deleteAllSavedByRecipeId($recipe_id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("DELETE FROM user_recipes WHERE recipes_id = ?");
+        $stmt->bindValue(1, $recipe_id);
+        $stmt->execute();
+    }
 }

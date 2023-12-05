@@ -10,23 +10,21 @@ if (!isset($_SESSION['userId'])) {
 $error = false;
 $users = User::getAllUsers();
 
-if ($_POST) {
-
-    header('location: admin_editUsers');
-}
-
 if (isset($_GET['delete'])) {
+    $user = user::getUserById($_GET['delete']);
     // Assume you have a function to delete a user
-    User::deleteByUserId($_GET['delete']);
-    header('location: admin_editUsers');
+    User::deleteByUserId($_GET['delete'], $user->img_url);
+    header('location: admin_users');
 }
 ?>
 
 <div class="container mt-5 custom-container">
     <div class="d-flex align-items-start justify-content-between">
         <h2 class="mb-4">Gebruikers</h2>
+        <div>
         <a class="btn btn-primary" href="admin">Terug naar beheerdersdashboard</a>
-
+            <a class="btn btn-primary" href="admin_addUser"><i class="fa-solid fa-plus"></i></a>
+        </div>
     </div>
 
     <?php if ($error) : ?>
@@ -46,8 +44,8 @@ if (isset($_GET['delete'])) {
                 <th scope="col">Beheerder</th>
                 <th scope="col">Gereegistreed op</th>
                 <th scope="col">Land</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -60,17 +58,20 @@ if (isset($_GET['delete'])) {
                     <td>
                         <div style='max-width: 250px; max-height: 200px; overflow-y: auto;'><?php echo $user->description ?></div>
                     </td>
-                    <td><a class="btn-primary btn" href="<?php echo $user->img_url ?>">Afbeelding Bekijken</a></td>
+                    <td><a class="btn-primary btn" href="<?php echo $user->img_url ?>">Bekijken</a></td>
                     <td><?php echo $user->admin ? 'ja' : 'nee' ?></td>
                     <td><?php
                         $date = new DateTime($user->RegistrationDate);
                         echo $date->format('d-m-Y H:i:s'); ?></td>
 
                     <td><?php echo $user->name ?></td>
-                    <td><a class="btn btn-primary" href="admin_editUser?id=<?php echo $user->id ?>">Edit</a></td>
+                    <td><a class="btn btn-primary" href="admin_editUser?id=<?php echo $user->id ?>"><i
+                                    class="fa-solid fa-ellipsis"></i></a></td>
                     <td><a class="btn btn-danger" href="admin_Users?delete=<?php echo $user->id ?>"
-                           onclick="return confirm('Weet je het zeker dat je deze gebruiker wilt verwijderen');">Delete</a>
+                           onclick="return confirm('Weet je het zeker dat je deze gebruiker wilt verwijderen');"><i
+                                    class="fa-solid fa-xmark"></i></a>
                     </td>
+
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -53,7 +53,8 @@ if (isset($_GET['delete'])) {
         </div>
         <div class="row">
             <div class="col-md-8">
-                <img src="<?php echo $recipe->img_url; ?>" class="img-fluid" alt="<?php echo $recipe->title; ?>">
+                <img style="width: 100%; object-fit: cover" src="<?php echo $recipe->img_url; ?>" class="img-fluid"
+                     alt="<?php echo $recipe->title; ?>">
                 <div class="mt-4">
                     <p><?php echo $recipe->description; ?></p>
 

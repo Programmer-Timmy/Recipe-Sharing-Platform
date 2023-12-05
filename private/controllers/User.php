@@ -114,6 +114,12 @@ public static function login($email, $password){
      */
     public static function register($username, $lastname, $firstname, $email, $password, $country)
     {
+        // check if email already exists
+        if (self::ifEmailExists($email)) {
+            return 'Email bestaat al';
+            exit();
+        }
+
         global $conn;
         $stmt = $conn->prepare("INSERT INTO users (username, lastname, firstname, email, password_hash, country_id) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bindValue(1, htmlspecialchars($username));
@@ -237,19 +243,22 @@ public static function login($email, $password){
      */
     public static function updateUserAdmin($id, $username, $firstname, $lastname, $email, $description, $admin, $image, $country, $oldImgUrl)
     {
-
+        // check if image is uploaded
         if ($image['name'] !== '') {
+            // delete old image if it's not the default image
             if ($oldImgUrl !== 'img/defaultProfilePic.jpg') {
                 self::deleteImg($oldImgUrl);
             }
+            // upload new image
             $image = self::uploadImg($image);
             if ($image == false) {
                 return false;
             }
         } else {
+            // keep old image
             $image = $oldImgUrl;
         }
-
+        // update user
         global $conn;
         $stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, description = ?, admin = ?, img_url = ?, country_id = ?, username = ?  WHERE id = ?");
         $stmt->bindValue(1, htmlspecialchars($firstname));
@@ -266,15 +275,79 @@ public static function login($email, $password){
         return true;
     }
 
-    public static function deleteByUserId($id)
+    /**
+     * @param $id
+     * @param $img_url
+     * @return void
+     */
+    public static function deleteByUserId($id, $img_url)
     {
-
+        // delete all recipes, comments and saved recipes by user
+        Saved::deleteAllSavedByUserId($id);
+        comments::deleteCommentsByUserId($id);
         Recipes::deleteAllRecipesByUserId($id);
 
+        // delete image if it's not the default image
+        if ($img_url !== 'img/defaultProfilePic.jpg') {
+            self::deleteImg($img_url);
+        }
+
+        // delete user
         global $conn;
         $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
+    }
+
+    public static function addUserAdmin($username, $firstname, $lastname, $email, $description, $admin, $image, $country, $password)
+    {
+        // check if email already exists
+        if (self::ifEmailExists($email)) {
+            return 'Email bestaat al';
+            exit();
+        }
+
+        // check if image is uploaded
+        if ($image['name'] !== '') {
+            // upload new image
+            $image = self::uploadImg($image);
+            if ($image == false) {
+                return 'Afbeelding uploaden mislukt';
+            }
+        } else {
+            $image = 'img/defaultProfilePic.jpg';
+        }
+
+
+        // update user
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, email, description, admin, img_url, country_id, username, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bindValue(1, htmlspecialchars($firstname));
+        $stmt->bindValue(2, htmlspecialchars($lastname));
+        $stmt->bindValue(3, htmlspecialchars($email));
+        $stmt->bindValue(4, htmlspecialchars($description));
+        $stmt->bindValue(5, $admin);
+        $stmt->bindValue(6, $image);
+        $stmt->bindValue(7, $country);
+        $stmt->bindValue(8, htmlspecialchars($username));
+        $stmt->bindValue(9, password_hash($password, PASSWORD_DEFAULT));
+        $stmt->execute();
+
+
+    }
+
+    private static function ifEmailExists($email)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bindValue(1, $email);
+        $stmt->execute();
+        $user = $stmt->fetchObject();
+        if ($user == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

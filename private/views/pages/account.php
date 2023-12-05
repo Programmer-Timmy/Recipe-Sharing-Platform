@@ -23,10 +23,6 @@ if ($_POST) {
         $error = true;
     }
 }
-
-
-
-
 ?>
 <div class="container  mt-4">
     <?php if ($error) {
@@ -41,6 +37,8 @@ if ($_POST) {
                 <button id="editProfileBtn" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#editProfileModal">Edit Profile
                 </button>
+                <a href="account?delete=<?php echo $_SESSION['userId'] ?>" class="btn btn-danger ms-2"><i
+                            class="fa-solid fa-xmark"></i></a>
             </div>
         </div>
 

@@ -280,24 +280,27 @@ class Recipes
      */
     public static function deleteAllRecipesByUserId($id)
     {
-        $recipes = Recipes::getRecipeByUser($id);
+        global $conn;
 
-        // delete comments, categories and ingredients from recipes
-        // delete images from recipes
+        //loop through all recipes
+        $recipes = Recipes::getRecipeByUser($id);
         foreach ($recipes as $recipe) {
-            if ($recipe->img_url != 'img/defaultImg.png') {
+            // delete image if not default image
+            if ($recipe->img_url != 'img/defaultImg.jpg') {
                 self::deleteImg($recipe->img_url);
             }
 
+            // delete comments, categories, ingredients and saved recipes
+            Saved::deleteAllSavedByRecipeId($recipe->id);
             comments::deleteCommentsByRecipeId($recipe->id);
             categories::deleteCategoriesFromRecipe($recipe->id);
             ingredients::deleteIngredientsFromRecipe($recipe->id);
+
+            // delete recipe
+            $stmt = $conn->prepare("DELETE FROM recipes WHERE id = ? ");
+            $stmt->bindValue(1, $recipe->id);
+            $stmt->execute();
         }
-        // delete recipes from user
-        global $conn;
-        $stmt = $conn->prepare("DELETE FROM recipes WHERE user_id = ? ");
-        $stmt->bindValue(1, $id);
-        $stmt->execute();
 
     }
 
