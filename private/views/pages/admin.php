@@ -4,7 +4,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Recipes</h5>
+                    <h5 class="card-title">Recepten</h5>
                     <p class="card-text">Manage recipes in the admin panel.</p>
                     <a href="admin_recipes" class="btn btn-primary">Go to Recipes</a>
                 </div>
@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Users</h5>
+                    <h5 class="card-title">Gebruikers</h5>
                     <p class="card-text">Manage users in the admin panel.</p>
                     <a href="admin_users" class="btn btn-primary">Go to Users</a>
                 </div>
@@ -24,9 +24,9 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Comments</h5>
+                    <h5 class="card-title">Commentaar</h5>
                     <p class="card-text">Manage comments in the admin panel.</p>
-                    <a href="comments" class="btn btn-primary">Go to Comments</a>
+                    <a href="admin_comments" class="btn btn-primary">Go to Comments</a>
                 </div>
             </div>
         </div>

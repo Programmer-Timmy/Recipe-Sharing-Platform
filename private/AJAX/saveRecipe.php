@@ -1,6 +1,10 @@
 <?php
 require_once ('../private/config/settings.php');
 
+if (!isset($_SESSION['userId'])) {
+    header('Location: home');
+}
+
     global $database;
 
     $servername = $database['host'];

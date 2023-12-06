@@ -25,7 +25,7 @@ if ($position !== false) {
     $require = $newString; // Output: "Hello "
 }
 
-if ($require !== '/search' && $require !== '/saveRecipe'){
+if ($require !== '/search' && $require !== '/saveRecipe' && $require !== '/searchComments') {
 // Include header
     include __DIR__ . '/../private/Views/templates/header.php';
 

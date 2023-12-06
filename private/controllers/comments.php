@@ -9,7 +9,7 @@ class comments
     public static function getCommentsByRecipeId($id)
     {
         global $conn;
-        $stmt = $conn->prepare("SELECT comments.id, users.id as user_id, comment, timestamp, rating, username, img_url FROM comments join users on comments.users_id = users.id WHERE recipes_id = ?");
+        $stmt = $conn->prepare("SELECT comments.id, users.id as user_id, comment, timestamp, rating, username, users.img_url, recipes.title FROM comments join users on comments.users_id = users.id join recipes on comments.recipes_id = recipes.id WHERE recipes_id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -99,5 +99,33 @@ class comments
         $stmt = $conn->prepare("DELETE FROM comments WHERE users_id = ?");
         $stmt->bindValue(1, $id);
         return $stmt->execute();
+    }
+
+    /**
+     * @param $user
+     * @param $recipe
+     * @return mixed
+     */
+    public static function getCommentsByUserAndRecipe($user, $recipe)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT comments.*, users.username, recipes.title FROM comments join users on comments.users_id = users.id join recipes on comments.recipes_id = recipes.id WHERE recipes_id = ? AND users_id = ?");
+        $stmt->bindValue(1, $recipe);
+        $stmt->bindValue(2, $user);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * @param $id
+     * @return array|false
+     */
+    public static function getCommentsByUserId($id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT comments.*, users.username, recipes.title FROM comments join users on comments.users_id = users.id join recipes on comments.recipes_id = recipes.id WHERE users_id = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 }
