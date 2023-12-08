@@ -1,6 +1,8 @@
 <?php
 $wrong = false;
-
+if (!isset($_COOKIE['redirect'])) {
+    setcookie('redirect', 'account', time() + 3600, '/');
+}
     if($_POST){
         if(user::login($_POST['email'], $_POST['password'])){
             header("Location: ".$_COOKIE['redirect']);

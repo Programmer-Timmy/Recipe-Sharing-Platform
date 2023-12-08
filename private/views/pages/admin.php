@@ -1,3 +1,15 @@
+<?php
+if (!isset($_SESSION['userId'])) {
+    setcookie('redirect', 'admin', time() + 3600, '/');
+    header('Location: login');
+    exit();
+} elseif (!isset($_SESSION['admin'])) {
+    header('Location: home');
+    exit();
+}
+
+?>
+
 <div class="container mt-5" id="admin">
     <h2 class="mb-4 text-center">Welcome to the Admin Dashboard</h2>
     <div class="row">
@@ -36,7 +48,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Countries</h5>
                     <p class="card-text">Manage countries in the admin panel.</p>
-                    <a href="countries" class="btn btn-primary">Go to Countries</a>
+                    <a href="admin_countries" class="btn btn-primary">Go to Countries</a>
                 </div>
             </div>
         </div>
@@ -46,7 +58,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Categories</h5>
                     <p class="card-text">Manage categories in the admin panel.</p>
-                    <a href="categories" class="btn btn-primary">Go to Categories</a>
+                    <a href="admin_categories" class="btn btn-primary">Go to Categories</a>
                 </div>
             </div>
         </div>
@@ -56,7 +68,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Ingredients</h5>
                     <p class="card-text">Manage ingredients in the admin panel.</p>
-                    <a href="ingredients" class="btn btn-primary">Go to Ingredients</a>
+                    <a href="admin_ingredients" class="btn btn-primary">Go to Ingredients</a>
                 </div>
             </div>
         </div>

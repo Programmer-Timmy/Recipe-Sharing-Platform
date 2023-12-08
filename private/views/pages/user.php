@@ -43,7 +43,7 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
                 <div class=\"card flex-fill\">
                 <button class=\"btn like-btn $liked\" id='likeButton_$userRecipe->id' onclick='like($userRecipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
                     <a href=\"recipe?id=$userRecipe->id\" class=\"card-link\">
-                        <img src=\"img/588A9371.jpg\" class=\"card-img-top\" alt=\"$userRecipe->title\">
+                        <img src=\"$userRecipe->img_url\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">$userRecipe->title</h5>
                             <p class=\"card-text\">$userRecipe->description</p>

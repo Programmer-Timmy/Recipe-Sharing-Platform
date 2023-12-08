@@ -34,11 +34,15 @@ if ($user != 0 && $recipe != 0) {
 } elseif ($recipe != 0) {
 // Filter only by recipe
     $comments = comments::getCommentsByRecipeId($recipe);
+} else {
+    // No filter
+    $comments = false;
 }
 ?>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
+        <?php if ($comments) : ?>
         <thead>
         <tr>
             <th scope="col">Gebruiker</th>
@@ -56,10 +60,12 @@ if ($user != 0 && $recipe != 0) {
                 <td><?= $comment->comment ?></td>
                 <td><?= $comment->timestamp ?></td>
                 <td>
-                    <a href="admin_comments_delete?id=<?= $comment->id ?>" class="btn btn-danger">Verwijderen</a>
+                    <a href="admin_comments?id=<?= $comment->id ?>" class="btn btn-danger">Verwijderen</a>
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php endforeach; else : ?>
+            <h1 style="text-align: center;">Selecteer 1 van de opties of beiden.</h1>
+        <?php endif; ?>
         </tbody>
     </table>
 </div>

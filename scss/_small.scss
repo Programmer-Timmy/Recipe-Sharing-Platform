@@ -289,3 +289,10 @@ a.btn.btn-primary.mr-2x.w-25.m-3.p-3 {
     text-align: center;
   }
 }
+
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+
+}

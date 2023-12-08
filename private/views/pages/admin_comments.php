@@ -1,4 +1,17 @@
 <?php
+if (!isset($_SESSION['userId'])) {
+    setcookie('redirect', 'admin_comments', time() + 3600, '/');
+    header('Location: login');
+    exit();
+} elseif (!isset($_SESSION['admin'])) {
+    header('Location: home');
+    exit();
+}
+
+if (isset($_GET['id'])) {
+    comments::deleteComment($_GET['id']);
+}
+
 $users = User::getAllUsers();
 $recipes = Recipes::getRecipes();
 ?>
