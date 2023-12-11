@@ -55,7 +55,16 @@ $titles = [
     'recipes' => 'Recepten - ' . $site['siteName'],
     'account' => 'Profiel - ' . $site['siteName'],
     'saved' => 'Opgeslagen - ' . $site['siteName'],
-    '404' => '404 - Oops pagina niet gevonden!',
+    'admin' => 'Beheerdersdashboard - ' . $site['siteName'],
+    'admin_users' => 'Beheer gebruikers - ' . $site['siteName'],
+    'admin_recipes' => 'Beheer recepten - ' . $site['siteName'],
+    'admin_categories' => 'Beheer categorieën - ' . $site['siteName'],
+    'admin_comments' => 'Beheer commentaar - ' . $site['siteName'],
+    'admin_countries' => 'Beheer landen - ' . $site['siteName'],
+    'login' => 'Inloggen - ' . $site['siteName'],
+    'register' => 'Registreren - ' . $site['siteName'],
+    'recipe' => 'Recept - ' . $site['siteName'],
+    '404' => '404 - Oops pagina niet gevonden!'
 ];
 
 // Disable errors if debug is set to false

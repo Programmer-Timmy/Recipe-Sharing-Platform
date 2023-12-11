@@ -13,6 +13,10 @@ class country
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    /**
+     * @param $name
+     * @return void
+     */
     public static function addCountry($name)
     {
         global $conn;
@@ -21,6 +25,10 @@ class country
         $stmt->execute();
     }
 
+    /**
+     * @param $id
+     * @return false|void
+     */
     public static function deleteCountry($id)
     {
         try {

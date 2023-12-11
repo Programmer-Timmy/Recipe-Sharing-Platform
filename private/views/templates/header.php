@@ -15,7 +15,9 @@ function getPageTitle() {
         }
     }
     return $pageTitle;
+
 }
+
 
 ?>
 

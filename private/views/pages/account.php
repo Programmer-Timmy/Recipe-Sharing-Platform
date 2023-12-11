@@ -10,8 +10,8 @@ if(!isset($_SESSION['userId'])){
 }
 
 if (isset($_GET['delete'])) {
-    if (Recipes::deleteRecipe($_GET['delete'], $_SESSION['userId'])) {
-        header('Location: account');
+    if (User::deleteByUserId($_GET['delete'], $user->img_url)) {
+        header('Location: logout');
     } else {
         $error = true;
     }

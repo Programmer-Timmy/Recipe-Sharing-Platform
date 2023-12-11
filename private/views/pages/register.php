@@ -23,30 +23,30 @@ if ($_POST) {
         ?>
         <div class="form-outline mb-4">
             <label class="form-label" for="username">Gebruikersnaam:</label>
-            <input type="text" id="username" name="username" class="form-control">
+            <input type="text" id="username" name="username" required class="form-control">
         </div>
 
         <div class="form-outline mb-4">
             <label class="form-label" for="firstName">Voornaam:</label>
-            <input type="text" id="firstName" name="firstName" class="form-control">
+            <input type="text" id="firstName" name="firstName" required class="form-control">
         </div>
 
         <div class="form-outline mb-4">
             <label class="form-label" for="lastName">Achternaam:</label>
-            <input type="text" id="lastName" name="lastName" class="form-control">
+            <input type="text" id="lastName" name="lastName" required class="form-control">
         </div>
 
 
         <!-- Email input -->
         <div class="form-outline mb-4">
             <label class="form-label" for="form2Example1">Email Adres:</label>
-            <input type="email" id="form2Example1" name="email" class="form-control">
+            <input type="email" id="form2Example1" name="email" required class="form-control">
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
             <label class="form-label" for="form2Example2">Wachtwoord:</label>
-            <input type="password" id="form2Example2" name="password" class="form-control">
+            <input type="password" id="form2Example2" name="password" required class="form-control">
         </div>
 
         <div class="form-outline mb-4">

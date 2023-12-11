@@ -80,6 +80,11 @@ class Ingredients
         $stmt->execute();
     }
 
+    /**
+     * @param $recipe_id
+     * @param $ingredient_id
+     * @return bool
+     */
     public static function deleteIngredientFromRecipe($recipe_id, $ingredient_id)
     {
         global $conn;
@@ -89,6 +94,33 @@ class Ingredients
         return $stmt->execute();
     }
 
-}
+    /**
+     * @param $id
+     * @return bool
+     */
+    public static function deleteIngredient($id)
+    {
+        try {
+            global $conn;
+            $stmt = $conn->prepare("DELETE FROM ingredients WHERE id = ?");
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
 
-?>
+    }
+
+    /**
+     * @param $name
+     * @return void
+     */
+    public static function addIngredient($name)
+    {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO ingredients (name) VALUES (?)");
+        $stmt->bindValue(1, $name);
+        $stmt->execute();
+    }
+}

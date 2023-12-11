@@ -231,7 +231,10 @@ class Recipes
     public static function deleteRecipe($id, $user_id)
     {
         $recipe = self::getRecipesByUserAndId($id, $user_id);
-
+        if (!$recipe) {
+            return;
+            exit();
+        }
         if ($recipe->img_url != 'img/defaultImg.png') {
         self::deleteImg($recipe->img_url);
         }
@@ -284,6 +287,9 @@ class Recipes
 
         //loop through all recipes
         $recipes = Recipes::getRecipeByUser($id);
+        if (!$recipes) {
+            return false;
+        }
         foreach ($recipes as $recipe) {
             // delete image if not default image
             if ($recipe->img_url != 'img/defaultImg.jpg') {

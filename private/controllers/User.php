@@ -119,6 +119,31 @@ public static function login($email, $password){
             return 'Email bestaat al';
             exit();
         }
+        if ($password == "") {
+            return 'Wachtwoord mag niet leeg zijn';
+            exit();
+        }
+        if ($username == "") {
+            return 'Gebruikersnaam mag niet leeg zijn';
+            exit();
+        }
+        if ($firstname == "") {
+            return 'Voornaam mag niet leeg zijn';
+            exit();
+        }
+        if ($lastname == "") {
+            return 'Achternaam mag niet leeg zijn';
+            exit();
+        }
+        if ($email == "") {
+            return 'Email mag niet leeg zijn';
+            exit();
+        }
+        if ($country == "") {
+            return 'Land mag niet leeg zijn';
+            exit();
+        }
+
 
         global $conn;
         $stmt = $conn->prepare("INSERT INTO users (username, lastname, firstname, email, password_hash, country_id) VALUES (?, ?, ?, ?, ?, ?)");
@@ -282,21 +307,26 @@ public static function login($email, $password){
      */
     public static function deleteByUserId($id, $img_url)
     {
-        // delete all recipes, comments and saved recipes by user
-        Saved::deleteAllSavedByUserId($id);
-        comments::deleteCommentsByUserId($id);
-        Recipes::deleteAllRecipesByUserId($id);
+        try {
+            // delete all recipes, comments and saved recipes by user
+            Saved::deleteAllSavedByUserId($id);
+            comments::deleteCommentsByUserId($id);
+            Recipes::deleteAllRecipesByUserId($id);
 
-        // delete image if it's not the default image
-        if ($img_url !== 'img/defaultProfilePic.jpg') {
-            self::deleteImg($img_url);
+            // delete image if it's not the default image
+            if ($img_url !== 'img/defaultProfilePic.jpg') {
+                self::deleteImg($img_url);
+            }
+
+            // delete user
+            global $conn;
+            $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+            return true;
+        } catch (PDOException) {
+            return false;
         }
-
-        // delete user
-        global $conn;
-        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
-        $stmt->bindValue(1, $id);
-        $stmt->execute();
     }
 
     public static function addUserAdmin($username, $firstname, $lastname, $email, $description, $admin, $image, $country, $password)

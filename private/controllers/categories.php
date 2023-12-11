@@ -89,11 +89,34 @@ class categories
         return $stmt->execute();
     }
 
-    public static function deleteByUserId($id)
+    /**
+     * @param $id
+     * @return bool
+     */
+    public static function deleteCategory($id)
     {
+        try {
+            global $conn;
+            $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
         global $conn;
-        $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
-        $stmt->bindValue(1, $id);
-        return $stmt->execute();
+    }
+
+    /**
+     * @param $name
+     * @return void
+     */
+    public static function addCategory($name)
+    {
+
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO categories (name) VALUES (?)");
+        $stmt->bindValue(1, $name);
+        $stmt->execute();
     }
 }
