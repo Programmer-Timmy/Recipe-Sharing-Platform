@@ -38,6 +38,7 @@
 
                     </div>
                     <div class="modal-footer">
+                        <a href="account_settings" class="btn btn-primary"> Account instellingen</a>
                         <input type="submit" class="btn btn-primary" value="Opslaan">
                     </div>
                 </form>

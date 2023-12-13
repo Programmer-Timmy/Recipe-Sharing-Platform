@@ -37,7 +37,7 @@ if ($_POST) {
                 <button id="editProfileBtn" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#editProfileModal">Profiel bewerken
                 </button>
-                <a href="account?delete=<?php echo $_SESSION['userId'] ?>" class="btn btn-danger ms-2"><i
+                <a href="account?delete=<?php echo $_SESSION['userId'] ?>" onclick="" class="btn btn-danger ms-2"><i
                             class="fa-solid fa-xmark"></i></a>
             </div>
         </div>

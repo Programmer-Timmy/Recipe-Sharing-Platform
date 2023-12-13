@@ -2,7 +2,11 @@
 $error = false;
 $countries = country::getAllCountries();
 if ($_POST) {
-    $data = User::register($_POST['username'], $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['password'], $_POST['country']);
+    if ($_POST['password'] != $_POST['password2']) {
+        $error = "Wachtwoorden komen niet overeen";
+    } else {
+        $data = User::register($_POST['username'], $_POST['lastName'], $_POST['firstName'], $_POST['email'], $_POST['password'], $_POST['country']);
+    }
 
     if (is_string($data)) {
         $error = $data;
@@ -47,6 +51,10 @@ if ($_POST) {
         <div class="form-outline mb-4">
             <label class="form-label" for="form2Example2">Wachtwoord:</label>
             <input type="password" id="form2Example2" name="password" required class="form-control">
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example3">Herhaal Wachtwoord:</label>
+            <input type="password" id="form2Example3" name="password2" required class="form-control">
         </div>
 
         <div class="form-outline mb-4">
