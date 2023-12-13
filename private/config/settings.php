@@ -14,7 +14,7 @@ $database = [
  */
 $site = [
     'siteName' => 'CookCook Connect',
-    'debug' => true,
+    'debug' => false,
     'maintenance' => false,
     'showPopup' => true,
     'popupTitle' => 'Welkom op de website!',

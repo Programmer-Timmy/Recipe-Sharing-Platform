@@ -91,7 +91,7 @@ if (isset($_GET['delete'])) {
                             </div>
                         </div>
                         <hr class="my-4">
-                        <h5 class="card-title">Ingredients</h5>
+                        <h5 class="card-title">Ingrediënten</h5>
                         <ul class="list-unstyled">
                             <?php
                             $ingredients = Ingredients::getIngredientsByRecipeId($recipe->id);
@@ -101,7 +101,7 @@ if (isset($_GET['delete'])) {
                             ?>
                         </ul>
                         <hr class="my-4">
-                        <h5 class="card-title">Created by</h5>
+                        <h5 class="card-title">Gemaakt door:</h5>
                         <?php if ($creator): ?>
                             <a href="user?id=<?php echo $creator->id; ?>" class="text-decoration-none">
                                 <div class="media mt-3 d-flex align-items-center flex-column" style="padding: 0 10px; border-radius: 8px;">
@@ -224,4 +224,3 @@ if (isset($_GET['delete'])) {
     </div>
 
 </div>
-

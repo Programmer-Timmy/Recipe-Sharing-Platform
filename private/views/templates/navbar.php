@@ -32,7 +32,7 @@ if ($position !== false) {
                 <input class="form-control me-2" type="search" id="search" name="search"
                        value="<?php if (isset($_COOKIE['search'])) {
                            echo $_COOKIE['search'];
-                       } ?>" placeholder="Search" aria-label="Search">';
+                       } ?>" placeholder="Zoeken" aria-label="Search">';
 
 
                 <li class="nav-item dropdown">

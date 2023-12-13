@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <h5 class="modal-title" id="editProfileModalLabel">Profiel bewerken</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="profileForm" method="post" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="btn btn-primary btn-rounded">
-                                    <label class="form-label text-white m-1" for="customFile2">Choose file
+                                    <label class="form-label text-white m-1" for="customFile2">Kies afbeelding
                                         <input type="file" class="form-control d-none" accept="image/*" name="avatar"
                                                id="customFile2"
                                            onchange="displaySelectedImage(event, 'selectedAvatar')"/>
@@ -28,11 +28,11 @@
                             </div>
                         </div>
 
-                        <label for="username" class="form-label">Username:</label>
+                        <label for="username" class="form-label">Gebruikersnaam:</label>
                         <input type="text" id="username" class="form-control" name="username"
                                value="<?php echo $user->username ?>" placeholder="Enter username">
 
-                        <label for="bio" class="form-label">Bio:</label>
+                        <label for="bio" class="form-label">Beschrijving:</label>
                         <textarea id="bio" class="form-control" name="bio"
                                   placeholder="Enter bio"><?php echo $user->description ?></textarea>
 

@@ -20,6 +20,7 @@ if ($_POST) {
 
     User::updateUserAdmin($_GET['id'], $_POST['username'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['description'], $admin, $_FILES['image'], $_POST['country'], $user->img_url);
     header('location: admin_users');
+    exit();
 }
 ?>
 
