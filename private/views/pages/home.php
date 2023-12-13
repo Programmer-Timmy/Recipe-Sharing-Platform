@@ -2,7 +2,7 @@
 $recipes = Recipes::getRandomRecipes();
 $randomCategories = Categories::getRandomCategories();
 $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
-
+mail::sendEmailVerification();
 ?>
 <div class="container mt-5">
     <div class="row text-center">

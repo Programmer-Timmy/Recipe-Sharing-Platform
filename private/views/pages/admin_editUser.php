@@ -5,6 +5,9 @@ if (!isset($_SESSION['userId'])) {
 } elseif ($_SESSION['admin'] != true) {
     header('location: home');
     exit();
+} elseif ($_SESSION['userId'] == $_GET['id']) {
+    header('location: admin_users');
+    exit();
 }
 
 $error = false;

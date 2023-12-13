@@ -65,13 +65,15 @@ if (isset($_GET['delete'])) {
                         echo $date->format('d-m-Y H:i:s'); ?></td>
 
                     <td><?php echo $user->name ?></td>
+                    <?php if ($_SESSION['userId'] != $user->id) : ?>
                     <td><a class="btn btn-primary" href="admin_editUser?id=<?php echo $user->id ?>"><i
                                     class="fa-solid fa-ellipsis"></i></a></td>
+
                     <td><a class="btn btn-danger" href="admin_Users?delete=<?php echo $user->id ?>"
                            onclick="return confirm('Weet je het zeker dat je deze gebruiker wilt verwijderen');"><i
                                     class="fa-solid fa-xmark"></i></a>
                     </td>
-
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>
