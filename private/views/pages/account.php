@@ -63,7 +63,9 @@ if ($_POST) {
                 <h2 class="mb-4 text-center">Mijn recepten</h2>
             </div>
             <div class="col-md-3 d-flex responsive justify-content-end align-items-start">
-                <a href="addRecipe" class="btn btn-primary">Voeg een recept toe</a>
+                <?php if ($userRecipes) {
+                    echo '<a href="addRecipe" class="btn btn-primary">Voeg een recept toe</a>';
+                } ?>
             </div>
         </div>
         <div class="row">
