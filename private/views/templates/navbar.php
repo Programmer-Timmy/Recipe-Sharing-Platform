@@ -36,10 +36,16 @@ if ($position !== false) {
 
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#"><i
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page"
+                       href="<?php if (!isset($_SESSION['userId'])) {
+                           echo 'login';
+                       } ?>"><i
                                 style="font-size: 25px; padding-left: 10px" class="fa-regular fa-user"></i></a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="account">Profiel</a></li>
+                        <?php if (isset($_SESSION['userId'])) : ?>
+
+
                         <li><a class="dropdown-item" href="account_settings">Instellingen</a></li>
                         <?php if (isset($_SESSION['admin'])) {
                             echo '<li><a class="dropdown-item" href="admin">Beheer</a></li>';
@@ -48,10 +54,15 @@ if ($position !== false) {
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="logout">Uitloggen</a></li>
+                        <?php endif; ?>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="saved"><i style="font-size: 25px; padding-left: 10px" class="fa-regular fa-heart"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="addRecipe"><i
+                                style="font-size: 25px; padding-left: 10px" class="fa-solid fa-plus"></i></a>
                 </li>
             </ul>
 
