@@ -48,7 +48,7 @@ if ($_POST) {
             <div class="col-md-4 text-center">
                 <img src="<?php echo $user->img_url ?>" alt="User Image" class="img-fluid rounded-circle mb-3"
                      style="max-width: 150px; border: 4px solid #fff;">
-                <h3 class="font-weight-bold"><?php echo ucfirst($user->username) ?></h3>
+                <h3 class="font-weight-bold"><?php echo $user->username ?></h3>
             </div>
 
             <div class="col-md-8">
