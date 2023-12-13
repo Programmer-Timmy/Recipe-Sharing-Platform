@@ -8,8 +8,11 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
     <div class="row text-center">
         <div class="col-md-12">
             <h1>Welkom bij CookCook Connect</h1>
-            <p>Ontdek en deel heerlijke recepten!</p>
+            <p>Ontdek verrukkelijke recepten en deel ze met anderen! Of voeg jouw eigen smakelijke creaties toe aan onze
+                gemeenschap!</p>
             <a href="recipes" class="btn btn-primary">Verken Recepten</a>
+            <a href="addRecipe" class="btn btn-success">Voeg Recept Toe</a>
+
         </div>
     </div>
 </div>
@@ -60,7 +63,20 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
 
     <div class="row mt-4">
         <div class="col-md-12">
-            <div class="card text-center" style='border: none;'
+            <div class="card text-center" style='border: none;'>
+                <div class="card-body">
+                    <h3 class="card-title">Voeg Jouw Eigen Recept Toe!</h3>
+                    <p>Heb je een geweldig recept dat je wilt delen met de community? Voeg het toe aan CookCook
+                        Connect!</p>
+                    <a href="addRecipe" class="btn btn-success">Voeg Recept Toe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card text-center" style="border: none; background-color: rgba(182,182,182,0.16)
             ">
                 <div class="card-body">
                     <h3 class="card-title">Verken Categorieën</h3>
@@ -75,4 +91,6 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
             </div>
         </div>
     </div>
+
+
 </div>

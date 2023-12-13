@@ -9,7 +9,8 @@ if (isset($_GET['category'])) {
 }
 ?>
 
-<div class="container mt-4">
+<div class="container mt-4"
+
     <section id="recipes" class="recipe-section">
         <!-- Recipe Section Content Goes Here -->
         <h2 class="mb-4 text-center">Recepten</h2>
@@ -80,5 +81,6 @@ if (isset($_GET['category'])) {
             }
             ?>
         </div>
+
     </section>
 </div>
