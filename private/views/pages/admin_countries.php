@@ -11,7 +11,7 @@ if (!isset($_SESSION['userId'])) {
 }
 
 if ($_POST) {
-    country::addCountry($_POST['country']);
+    country::addCountry($_POST['name']);
 }
 
 if (isset($_GET['id'])) {
@@ -36,7 +36,7 @@ $countries = country::getAllCountries();
     <form method="post" class="row g-3">
         <div class="col-md-6 mb-3">
             <label for="country" class="form-label">Land:</label>
-            <input type="text" class="form-control" id="country" name="country">
+            <input type="text" class="form-control" id="country" required name="name">
         </div>
         <div class="col-md-6 mb-3">
             <label for="country" class="form-label">&nbsp;</label>

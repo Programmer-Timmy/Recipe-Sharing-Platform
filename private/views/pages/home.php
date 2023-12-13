@@ -75,15 +75,4 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
             </div>
         </div>
     </div>
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3 class="card-title">Persoonlijke Aanbevelingen</h3>
-                    <!-- Persoonlijke aanbevelingen of gebruikersspecifieke inhoud komt hier -->
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

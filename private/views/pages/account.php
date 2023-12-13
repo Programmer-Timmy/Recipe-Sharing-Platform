@@ -33,7 +33,7 @@ if ($_POST) {
             <div class="col-md-6 mb-2">
                 <h2 class="mb-4 text-center">Profiel</h2>
             </div>
-            <div class="col-md-3 d-flex responive justify-content-end align-items-start">
+            <div class="col-md-3 d-flex responsive justify-content-end align-items-start">
                 <button id="editProfileBtn" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#editProfileModal">Edit Profile
                 </button>
@@ -60,7 +60,7 @@ if ($_POST) {
             <div class="col-md-6 mb-2">
                 <h2 class="mb-4 text-center">Mijn recepten</h2>
             </div>
-            <div class="col-md-3 d-flex responive justify-content-end align-items-start">
+            <div class="col-md-3 d-flex responsive justify-content-end align-items-start">
                 <a href="addRecipe" class="btn btn-primary">Voeg een recept toe</a>
             </div>
         </div>

@@ -31,7 +31,7 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
     <section id="recipes" class="recipe-section">
         <h2 class="mb-4 text-center">Recepten</h2>
 
-        <div class="row">
+        <div class="row ">
             <?php
             foreach($userRecipes as $userRecipe){
                 $liked = "";
@@ -42,7 +42,7 @@ $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                 <button class=\"btn like-btn $liked\" id='likeButton_$userRecipe->id' onclick='like($userRecipe->id, $issetUser)'><i class=\"fas fa-heart\"></i></button>
-                    <a href=\"recipe?id=$userRecipe->id\" class=\"card-link\">
+                    <a href=\"recipe?id=$userRecipe->id\" class=\"card-link h-100 d-flex flex-column\">
                         <img src=\"$userRecipe->img_url\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">$userRecipe->title</h5>

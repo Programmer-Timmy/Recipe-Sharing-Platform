@@ -36,6 +36,7 @@ class country
             $stmt = $conn->prepare("DELETE FROM countries WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
+            return true;
         } catch (PDOException) {
             return false;
         }
