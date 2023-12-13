@@ -37,7 +37,9 @@ if ($_POST) {
                 <button id="editProfileBtn" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#editProfileModal">Profiel bewerken
                 </button>
-                <a href="account?delete=<?php echo $_SESSION['userId'] ?>" onclick="" class="btn btn-danger ms-2"><i
+                <a href="account?delete=<?php echo $_SESSION['userId'] ?>"
+                   onclick="return confirm('Weet je zeker dat je je account wilt verwijderen')"
+                   class="btn btn-danger ms-2"><i
                             class="fa-solid fa-xmark"></i></a>
             </div>
         </div>
@@ -72,7 +74,7 @@ if ($_POST) {
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                     <a href='editRecipe?id=$userRecipe->id' class=\"btn btn-primary  edit-btn\"><i class=\"fa-solid fa-ellipsis\"></i></a>
-                    <a href='account?delete=$userRecipe->id' class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
+                    <a href='account?delete=$userRecipe->id' onclick=\"return confirm('Weet je zeker dat je dit recept wilt verwijderen')\" class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
                     <a href=\"recipe?id=$userRecipe->id\" class=\"card-link h-100 d-flex flex-column\">
                         <img src=\"$userRecipe->img_url\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">

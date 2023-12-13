@@ -88,12 +88,12 @@ if ($_POST) {
         var categoriesList = document.getElementById('categories-list');
         var newCategoriesItem = document.createElement('div');
         newCategoriesItem.className = 'input-group';
-        newCategoriesItem.innerHTML = '<select class="form-select" id="categories' + categoryIdCounter + '" name="categories[]" required>' +
+        newCategoriesItem.innerHTML = '<select class="form-select mt-2" id="categories' + categoryIdCounter + ';"name="categories[]" required>' +
             '<?php foreach ($categories as $category) {
                 echo "<option value=\'$category->id\' >" . $category->name . "</option>";
             } ?>' +
             '</select>' +
-            '<button class="btn btn-secondary" type="button" onclick="removeCategories(this.parentNode)">Verwijder Categorie</button>';
+            '<button class="btn btn-secondary mt-2" type="button" onclick="removeCategories(this.parentNode)">Verwijder Categorie</button>';
         categoriesList.appendChild(newCategoriesItem);
         categoryIdCounter++;
     }
@@ -102,13 +102,13 @@ if ($_POST) {
         var ingredientList = document.getElementById('ingredient-list');
         var newIngredientItem = document.createElement('div');
         newIngredientItem.className = 'input-group';
-        newIngredientItem.innerHTML = '<select class="form-select" id="ingredients' + ingredientIdCounter + '" name="ingredients[]" required>' +
+        newIngredientItem.innerHTML = '<select class="form-select mt-2" id="ingredients' + ingredientIdCounter + '" name="ingredients[]" required>' +
             '<?php foreach ($ingredients as $ingredient) {
                 echo "<option value=\'$ingredient->id\' >" . $ingredient->name . "</option>";
             } ?>' +
             '</select>' +
-            '<input type="text" name="ingredient_amount[]" class="form-control" placeholder="Hoeveelheid">' +
-            '<button class="btn btn-secondary" type="button" onclick="removeIngredient(this.parentNode)">Verwijder Ingrediënt</button>';
+            '<input type="text" name="ingredient_amount[]" class="form-control mt-2" placeholder="Hoeveelheid">' +
+            '<button class="btn btn-secondary mt-2" type="button" onclick="removeIngredient(this.parentNode)">Verwijder Ingrediënt</button>';
         ingredientList.appendChild(newIngredientItem);
         ingredientIdCounter++;
     }
