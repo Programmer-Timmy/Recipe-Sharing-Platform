@@ -11,7 +11,8 @@ if ($_POST) {
     if (is_string($data)) {
         $error = $data;
     } else {
-        header('Location: login');
+        header('Location: login?register=true');
+        exit();
     }
 }
 ?>

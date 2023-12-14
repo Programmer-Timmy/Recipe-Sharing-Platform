@@ -14,8 +14,11 @@ public static function login($email, $password){
     $stmt->execute();
     $user = $stmt->fetchObject();
     if($user == null){
-        return false;
+        return 'Wachtwoord of email is onjuist';
     }else{
+        if ($user->verified == 0) {
+            return 'Email is nog niet geverifieerd';
+        }
         if(password_verify($password, $user->password_hash)){
             if ($user->admin == 1) {
                 $_SESSION['admin'] = true;
@@ -23,7 +26,7 @@ public static function login($email, $password){
             $_SESSION['userId'] = $user->id;
             return true;
         }else{
-            return false;
+            return 'Wachtwoord of email is onjuist';
 
         }
     }
@@ -143,16 +146,22 @@ public static function login($email, $password){
             return 'Land mag niet leeg zijn';
             exit();
         }
-
-
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $token = uniqid();
+            mail::sendEmailVerification($email, $firstname, $lastname, $token);
+        } else {
+            return 'Email is niet geldig';
+            exit();
+        }
         global $conn;
-        $stmt = $conn->prepare("INSERT INTO users (username, lastname, firstname, email, password_hash, country_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (username, lastname, firstname, email, password_hash, country_id, token) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bindValue(1, htmlspecialchars($username));
         $stmt->bindValue(2, htmlspecialchars($lastname));
         $stmt->bindValue(3, htmlspecialchars($firstname));
         $stmt->bindValue(4, htmlspecialchars($email));
         $stmt->bindValue(5, password_hash($password, PASSWORD_DEFAULT));
         $stmt->bindValue(6, $country);
+        $stmt->bindValue(7, $token);
         $stmt->execute();
 
         return true;
@@ -376,6 +385,23 @@ public static function login($email, $password){
         if ($user == null) {
             return false;
         } else {
+            return true;
+        }
+    }
+
+    public static function verifyUser($token)
+    {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM users WHERE token = ?");
+        $stmt->bindValue(1, $token);
+        $stmt->execute();
+        $user = $stmt->fetchObject();
+        if ($user == null) {
+            return 'Gebruiker niet gevonden';
+        } else {
+            $stmt = $conn->prepare("UPDATE users SET token = '', verified = 1 WHERE id = ?");
+            $stmt->bindValue(1, $user->id);
+            $stmt->execute();
             return true;
         }
     }

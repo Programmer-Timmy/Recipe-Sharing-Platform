@@ -4,10 +4,11 @@ if (!isset($_COOKIE['redirect'])) {
     setcookie('redirect', 'account', time() + 3600, '/');
 }
     if($_POST){
-        if(user::login($_POST['email'], $_POST['password'])){
+        $data = user::login($_POST['email'], $_POST['password']);
+        if ($data === true) {
             header("Location: ".$_COOKIE['redirect']);
         }else{
-            $wrong = true;
+            $wrong = $data;
         }
 
     }
@@ -18,11 +19,16 @@ if (!isset($_COOKIE['redirect'])) {
 
     <form method="post" style="width: 22rem;">
         <?php
+        if (isset($_GET['register'])) {
+            echo '<div class="alert alert-success" role="alert">
+<p>Er is een e-mail verstuurd naar uw adres om uw registratie te voltooien.</p>
+            </div>';
+        }
         if ($wrong) {
 
-            echo '<div class="alert alert-danger text-center" role="alert">
-        Wachtwoord of email is onjuist!
-    </div>';
+            echo "<div class=\"alert alert-danger text-center\" role=\"alert\">
+        $data
+    </div>";
         }
         ?>
         <!-- Email input -->

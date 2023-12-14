@@ -1,7 +1,6 @@
 <?php
 $recipe = Recipes::getRecipe($_GET['id']);
 $commented = false;
-$comments = comments::getCommentsByRecipeId($recipe->id);
 
 $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
 if (!isset($_SESSION['userId'])) {
@@ -17,8 +16,7 @@ if (!isset($_SESSION['userId'])) {
 
 }
 
-$creator = User::getUserById($recipe->user_id);
-$creatorImage = $creator ? $creator->img_url : '';
+
 
 
 if ($_POST) {
@@ -37,6 +35,10 @@ if (isset($_GET['delete'])) {
     header("Location: recipe?id=" . $_GET['id']);
 }
 if ($recipe) :
+    $comments = comments::getCommentsByRecipeId($recipe->id);
+    $creator = User::getUserById($recipe->user_id);
+    $creatorImage = $creator ? $creator->img_url : '';
+
 ?>
 
 <div class="container mt-4">

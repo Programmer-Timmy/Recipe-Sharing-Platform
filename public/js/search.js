@@ -19,8 +19,10 @@ function searchProducts() {
 }
 
 var myTextBox = document.getElementById('search');
-myTextBox.addEventListener('input', function(){
-    searchProducts();
+myTextBox.addEventListener('keyup', function (e) {
+    if (e.keyCode === 13) {
+        searchProducts();
+    }
 });
 
 document.getElementById('sortby').addEventListener('change', function () {
