@@ -19,7 +19,7 @@ class mail
     </p>
 
     <p style="font-size: 16px; line-height: 1.6; color: #333;">
-        Welkom bij ons Receptenplatform! 🍽️
+        Welkom bij ons Receptenplatform!
     </p>
 
     <p style="font-size: 16px; line-height: 1.6; color: #333;">
@@ -52,7 +52,7 @@ class mail
 
     <p style="font-size: 16px; line-height: 1.6; color: #333;">
         Veel kookplezier!<br>
-        Het Receptenplatform Team 🍳👩‍🍳👨‍🍳
+        Het Receptenplatform Team
     </p>
 
 </body>
@@ -75,7 +75,7 @@ class mail
             $mail->setLanguage('nl');
 
             //Recipients
-            $mail->setFrom('info@timmygamer.nl', 'CookCook Connect');
+            $mail->setFrom('coockcook.connect@timmygamer.nl', 'CookCook Connect');
             $mail->addAddress($email, ucfirst($firstname) . $lastname);     //Add a recipient
 
             //Content
