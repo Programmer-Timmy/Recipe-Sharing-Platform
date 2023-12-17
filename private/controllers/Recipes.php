@@ -232,25 +232,24 @@ class Recipes
     {
         $recipe = self::getRecipesByUserAndId($id, $user_id);
         if (!$recipe) {
-            return;
+            return false;
             exit();
         }
-        if ($recipe->img_url != 'img/defaultImg.png') {
+        if ($recipe->img_url !== 'img/defaultImg.jpg') {
         self::deleteImg($recipe->img_url);
         }
 
 
         categories::deleteCategoriesFromRecipe($id);
         ingredients::deleteIngredientsFromRecipe($id);
+        comments::deleteCommentsByRecipeId($id);
+        Saved::deleteAllSavedByRecipeId($id);
 
         global $conn;
         $stmt = $conn->prepare("DELETE FROM recipes WHERE id = ? and user_id = ?");
         $stmt->bindValue(1, $id);
         $stmt->bindValue(2, $user_id);
-        if ($stmt->execute() == false) {
-            return false;
-        }
-
+        $stmt->execute() == false;
 
         return true;
     }
