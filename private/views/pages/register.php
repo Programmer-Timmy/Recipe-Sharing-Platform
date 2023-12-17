@@ -4,16 +4,18 @@ $countries = country::getAllCountries();
 if ($_POST) {
     if ($_POST['password'] != $_POST['password2']) {
         $error = "Wachtwoorden komen niet overeen";
+
     } else {
         $data = User::register($_POST['username'], $_POST['lastName'], $_POST['firstName'], $_POST['email'], $_POST['password'], $_POST['country']);
+        if (is_string($data)) {
+            $error = $data;
+        } else {
+            header('Location: login?register=true');
+            exit();
+        }
     }
 
-    if (is_string($data)) {
-        $error = $data;
-    } else {
-        header('Location: login?register=true');
-        exit();
-    }
+
 }
 ?>
 

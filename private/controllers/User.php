@@ -38,7 +38,7 @@ public static function login($email, $password){
      */
     public static function getUserById($id){
         global $conn;
-        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country, country_id, admin FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
+        $stmt = $conn->prepare("SELECT users.id, username, email, firstname, lastname, description, img_url, name as country, country_id, admin, token, verified FROM users join countries on users.country_id = countries.id WHERE users.id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
         return $stmt->fetchObject();
@@ -346,6 +346,14 @@ public static function login($email, $password){
             exit();
         }
 
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $token = uniqid();
+            mail::sendEmailVerification($email, $firstname, $lastname, $token);
+        } else {
+            return 'Email is niet geldig';
+            exit();
+        }
+
         // check if image is uploaded
         if ($image['name'] !== '') {
             // upload new image
@@ -360,7 +368,7 @@ public static function login($email, $password){
 
         // update user
         global $conn;
-        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, email, description, admin, img_url, country_id, username, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, email, description, admin, img_url, country_id, username, password_hash, token, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->bindValue(1, htmlspecialchars($firstname));
         $stmt->bindValue(2, htmlspecialchars($lastname));
         $stmt->bindValue(3, htmlspecialchars($email));
@@ -370,6 +378,7 @@ public static function login($email, $password){
         $stmt->bindValue(7, $country);
         $stmt->bindValue(8, htmlspecialchars($username));
         $stmt->bindValue(9, password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindValue(10, $token);
         $stmt->execute();
 
 

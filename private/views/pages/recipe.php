@@ -3,18 +3,6 @@ $recipe = Recipes::getRecipe($_GET['id']);
 $commented = false;
 
 $issetUser = isset($_SESSION['userId']) ? 'true' : 'false';
-if (!isset($_SESSION['userId'])) {
-    setcookie('redirect', "recipe?id=" . $_GET['id'], time() + 3600, '/');
-} else {
-    foreach ($comments as $comment) {
-        if ($comment->user_id == $_SESSION['userId']) {
-            $commented = true;
-            $userComment = comments::getCommentsByUserAndProductId($recipe->id);
-
-        }
-    }
-
-}
 
 
 
@@ -39,7 +27,21 @@ if ($recipe) :
     $creator = User::getUserById($recipe->user_id);
     $creatorImage = $creator ? $creator->img_url : '';
 
-?>
+    if (!isset($_SESSION['userId'])) {
+        setcookie('redirect', "recipe?id=" . $_GET['id'], time() + 3600, '/');
+    } else {
+        foreach ($comments as $comment) {
+            if ($comment->user_id == $_SESSION['userId']) {
+                $commented = true;
+                $userComment = comments::getCommentsByUserAndProductId($recipe->id);
+
+            }
+        }
+
+    }
+
+
+    ?>
 
 <div class="container mt-4">
     <section id="recipe" class="recipe-section">
