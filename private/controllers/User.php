@@ -316,24 +316,28 @@ public static function login($email, $password){
      */
     public static function deleteByUserId($id, $img_url)
     {
-        try {
-            // delete all recipes, comments and saved recipes by user
-            Saved::deleteAllSavedByUserId($id);
-            comments::deleteCommentsByUserId($id);
-            Recipes::deleteAllRecipesByUserId($id);
+        if ($id == $_SESSION['userId'] || $_SESSION['admin']) {
+            try {
+                // delete all recipes, comments and saved recipes by user
+                Saved::deleteAllSavedByUserId($id);
+                comments::deleteCommentsByUserId($id);
+                Recipes::deleteAllRecipesByUserId($id);
 
-            // delete image if it's not the default image
-            if ($img_url !== 'img/defaultProfilePic.jpg') {
-                self::deleteImg($img_url);
+                // delete image if it's not the default image
+                if ($img_url !== 'img/defaultProfilePic.jpg') {
+                    self::deleteImg($img_url);
+                }
+
+                // delete user
+                global $conn;
+                $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+                $stmt->bindValue(1, $id);
+                $stmt->execute();
+                return true;
+            } catch (PDOException) {
+                return false;
             }
-
-            // delete user
-            global $conn;
-            $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
-            $stmt->bindValue(1, $id);
-            $stmt->execute();
-            return true;
-        } catch (PDOException) {
+        } else {
             return false;
         }
     }

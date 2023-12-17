@@ -13,20 +13,27 @@ if (isset($_GET['delete'])) {
     if (User::deleteByUserId($_GET['delete'], $user->img_url)) {
         header('Location: logout');
     } else {
-        $error = true;
+        $error = 'Er is iets misgegaan met het verwijderen van je account.';
+    }
+}
+if (isset($_GET['deleteRecipe'])) {
+    if (Recipes::deleteRecipe($_GET['deleteRecipe'], $_SESSION['userId'])) {
+        header('Location: account');
+    } else {
+        $error = 'Er is iets misgegaan met het verwijderen van het recept.';
     }
 }
 if ($_POST) {
     if (User::updateUserPage($_POST['username'], $_POST['bio'], $_FILES['avatar'], $_SESSION['userId'])) {
         header('Location: account');
     } else {
-        $error = true;
+        $error = 'Er is iets misgegaan met het bewerken van je profiel.';
     }
 }
 ?>
 <div class="container  mt-4">
     <?php if ($error) {
-        echo '<div class="alert alert-danger" role="alert">Oeps er is iets misgegaan.</div>';
+        echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
     } ?>
     <section id="profile" class="bg-light rounded p-4">
         <div class="row justify-content-end">
@@ -76,7 +83,7 @@ if ($_POST) {
                 <div class=\"col-md-4 mb-4 d-flex\">
                 <div class=\"card flex-fill\">
                     <a href='editRecipe?id=$userRecipe->id' class=\"btn btn-primary  edit-btn\"><i class=\"fa-solid fa-ellipsis\"></i></a>
-                    <a href='account?delete=$userRecipe->id' onclick=\"return confirm('Weet je zeker dat je dit recept wilt verwijderen')\" class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
+                    <a href='account?deleteRecipe=$userRecipe->id' onclick=\"return confirm('Weet je zeker dat je dit recept wilt verwijderen')\" class=\"btn btn-danger delete-btn\"><i class=\"fa-solid fa-xmark\"></i></a>
                     <a href=\"recipe?id=$userRecipe->id\" class=\"card-link h-100 d-flex flex-column\">
                         <img src=\"$userRecipe->img_url\" class=\"card-img-top\" alt=\"$userRecipe->title\">
                         <div class=\"card-body\">
